@@ -1,27 +1,18 @@
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="创建一个nest.js项目
-nest new your_project_name
-创建module
-nest g mo user api
-创建controller
-nest g co user api
-创建service
-nest g s ..." />
-    <meta name="keywords" content="nest.js" />
-    <link rel="stylesheet" href="https://Orime112.github.io/media/css/bootstrap.min.css">
-    
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/styles/default.min.css">
-              
-    <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.18.1/build/highlight.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js"></script>
-    <link rel="stylesheet" href="https://Orime112.github.io/media/css/live2d.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-    <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0-2/css/all.min.css">
-    <title>个人小站</title>
-</head>
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    a {
+        text-decoration: none;
+    }
+</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+<link rel="stylesheet" href="https://Orime112.github.io/media/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://Orime112.github.io/media/css/live2d.css">
+<title>标签-个人小站</title>
+
 
 <body>
     <!-- 响应式布局，针对PC端内容显示 -->
@@ -246,126 +237,146 @@ nest g s ..." />
             alert("博主暂未设置QQ联系方式");
     }
 </script></div>
-                <div id="tab1" class="tab">
-                    <div class="bars">
-                        <span></span>
-                        <span></span>
-                        <span></span>
-                    </div>
-                    <div class="close"></div>
-                </div>
                 <div id="main" class="col-xs-12 col-sm-7">
-                    <link rel="stylesheet" href="https://Orime112.github.io/media/css/font-awesome.css">
-<style>
+                    <style>
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+        }
 
-</style>
+        /*��ʼ״̬ ͸����Ϊ0*/
+        40% {
+            opacity: 0;
+        }
 
-<body>
-    <div class="allcontent">
-        <div class="postshow">
-            
-            <div class="postdetailimg" style="width:100%;overflow: hidden;display: none">
-                <img src="https://Orime112.github.io/post-images/nestjs-hou-duan-kai-fa-pei-zhi.jpg" class="postimage" style="cursor:auto">
-            </div>
-            <div class="postinfo">
-                <div class="postdate"><i class="fa fa-calendar"></i>2020-06-23</div>
-                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 1 min read</div>
-                <div class="posttag">
-                    
-                    <a href="https://Orime112.github.io/tag/TPOYLBbnB/" class="postlink">
-                        <i class="fa fa-tag"></i> nest.js
-                    </a>
-                    
-                </div>
-            </div>
-            
-        <div id="texttitle" style="text-align: center">
-            <h2>nest.js后端开发配置</h2>
-            <!-- id 将作为查询条件 -->
-            <div id="pl" style="display:none">https://Orime112.github.io/post/nestjs-hou-duan-kai-fa-pei-zhi/</div>
-            <div id="rootaddr" style="display:none">https://Orime112.github.io</div>
-            <span id="hotnum" class="leancloud_visitors" data-flag-title="nest.js后端开发配置">
-                <h4 class="readercount">热度🔥: <i class="leancloud-visitors-count">loading...</i></h4>
-            </span>
-        </div>
-        <div class="text ">
-            <pre><code>创建一个nest.js项目
-nest new your_project_name
-创建module
-nest g mo user api
-创建controller
-nest g co user api
-创建service
-nest g s user api
-</code></pre>
+        /*����״̬ ͸����Ϊ0*/
+        100% {
+            opacity: 1;
+        }
 
-        </div>
-        
-        
-        <div class="next-post">
-            下一篇
-            <a href="https://Orime112.github.io/post/xin-jian-wen-zhang-a/">
-                新建文章啊
-            </a>
-        </div>
-        
-    </div>
-    </div>
-</body>
-<script>
-    var t_img; // 定时�?
-    var isLoad = true; // 控制变量
-    isImgLoad(function () {
-        // 加载完成
-        $('.postdetailimg').css("display", "block");
-    });
-    // 判断图片加载的函�?
-    function isImgLoad(callback) {
-        // 注意我的图片类名都是cover，因为我�?需要�?�理cover。其它图片可以不管�?
-        // 查找所有封面图，迭代�?�理
-        $('.postdetailimg').each(function () {
-            // 找到�?0就将isLoad设为false，并退出each
-            if (this.height === 0) {
-                isLoad = false;
-                return false;
-            }
-        });
-        // 为true，没有发现为0的。加载完�?
-        if (isLoad) {
-            clearTimeout(t_img); // 清除定时�?
-            // 回调函数
-            callback();
-            // 为false，因为找到了没有加载完成的图，将调用定时器递归
-        } else {
-            isLoad = true;
-            t_img = setTimeout(function () {
-                isImgLoad(callback); // 递归�?�?
-            }, 500); // 我这里�?�置的是500�?秒就�?描一次，�?以自己调�?
+        /*����״̬ ͸����Ϊ1*/
+    }
+
+    @-webkit-keyframes fade-in {
+
+        /*���webkit�ں�*/
+        0% {
+            opacity: 0;
+        }
+
+        40% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
         }
     }
 
-    //文章阅读热度
-    var pl = $("#pl").html();
-    var rootaddr = $("#rootaddr").html();
-    pl = pl.replace(rootaddr, "");
-    $("#hotnum").attr('id', pl);
-</script>
-                    <div name="comment" style="background: white">
-                        <div class="commentcontainer">
-                            
-                            <p>请到客户端“主题--自定义配置--valine”中填入ID和KEY</p>
-                            
-                        </div>
-                    </div>
-                </div>
-                <div class="toc-container">
-                    
+    .postimage {
+        width: 100%;
+    }
+
+    .tag-container {
+        min-height: 100vh;
+        animation: fade-in;
+        /*��������*/
+        animation-duration: 1s;
+        /*��������ʱ��*/
+        -webkit-animation: fade-in 1s;
+        /*���webkit�ں�*/
+    }
+
+    @media screen and (max-width:1300px) {
+        .tag-container {
+            margin-top: 100px;
+            animation: fade-in;
+            /*��������*/
+            animation-duration: 1s;
+            /*��������ʱ��*/
+            -webkit-animation: fade-in 1s;
+            /*���webkit�ں�*/
+        }
+    }
+</style>
+<link rel="stylesheet" href="https://Orime112.github.io/media/css/font-awesome.css">
+<div class="tag-container">
+    
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            <img src="https://Orime112.github.io/post-images/nestjs-hou-duan-kai-fa-pei-zhi.jpg" class="postimage"
+                onclick="window.location.href= 'https://Orime112.github.io/post/nestjs-hou-duan-kai-fa-pei-zhi/';return false">
+            <div class="posttitlebox">
+                <div class="posttitle" onclick="window.location.href= 'https://Orime112.github.io/post/nestjs-hou-duan-kai-fa-pei-zhi/';return false">
+                    nest.js后端开发配置
                 </div>
             </div>
         </div>
-        <div class="toggleContainer">
-            <div class="toggle">
-                <i class="fas fa-angle-double-up"></i>
+        <div class="postinfo">
+            <div class="postdate"><i class="fa fa-calendar"></i>2020-06-23</div>
+            <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 1 min read</div>
+            <div class="posttag">
+                
+                <a href="https://Orime112.github.io/tag/TPOYLBbnB/" class="postlink">
+                    <i class="fa fa-tag"></i> nest.js
+                </a>
+                
+            </div>
+        </div>
+        
+</div>
+
+</div>
+                    <div>
+                        <div class="pagi">
+    <ul>
+        
+        <li><a style="width:100px">&nbsp;</a></li>
+        
+                <li><a id="page1">1</a></li>
+                <li><a id="page2" class="active">2</a></li>
+                <li><a id="page3">3</a></li>
+                
+        <li><a style="width:100px">&nbsp;</a></li>
+        
+            </ul>
+</div>
+
+<div id="pagination-prev" style="display:none"> 
+</div>
+<div id="pagination-next" style="display:none"> </div>
+
+
+<script>
+    var prevstr = document.getElementById("pagination-prev").innerHTML;
+    var nextstr = document.getElementById("pagination-next").innerHTML;
+    var page1 = document.getElementById("page1");
+    var page2 = document.getElementById("page2");
+    var page3 = document.getElementById("page3");
+    page1.innerHTML = '-';
+    page2.innerHTML = '1';
+    page3.innerHTML = '-';
+    if (prevstr.length > 5) {
+        if (prevstr.indexOf("page/") != -1) {
+            var prevnum = parseInt(prevstr.split("page/")[1]);
+            page1.innerHTML = prevnum;
+            page2.innerHTML = prevnum + 1;
+        } else {
+            page1.innerHTML = 1;
+            page2.innerHTML = 2;
+        }
+    }
+    if (nextstr.indexOf("page/") != -1) {
+        var nextnum = parseInt(nextstr.split("page/")[1]);
+        page3.innerHTML = nextnum;
+        page2.innerHTML = nextnum - 1;
+    }
+</script>
+                        <div style="padding-bottom:10%"></div>
+                    </div>
+                </div>
+                <div class="col-xs-6 col-sm-2"></div>
             </div>
         </div>
         <div id="bg">
@@ -375,6 +386,8 @@ nest g s user api
         <div id="bgurl" style="display:none">\media\images\custom-bgimage.gif</div>
            
     </div>
+
+
     <!-- 响应式布局，针对手机端内容显示 -->
     <div class="nav-small">
         <head>
@@ -452,108 +465,100 @@ nest g s user api
   <!-- 引入BootStrap核心js文件 -->
   <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </body>
-        <div style="margin-top:30px"></div>
-        <link rel="stylesheet" href="https://Orime112.github.io/media/css/font-awesome.css">
-<style>
+        <div style="margin-top:50px"></div>
+        <style>
+    @keyframes fade-in {
+        0% {
+            opacity: 0;
+        }
 
-</style>
+        /*��ʼ״̬ ͸����Ϊ0*/
+        40% {
+            opacity: 0;
+        }
 
-<body>
-    <div class="allcontent">
-        <div class="postshow">
-            
-            <div class="postdetailimg" style="width:100%;overflow: hidden;display: none">
-                <img src="https://Orime112.github.io/post-images/nestjs-hou-duan-kai-fa-pei-zhi.jpg" class="postimage" style="cursor:auto">
-            </div>
-            <div class="postinfo">
-                <div class="postdate"><i class="fa fa-calendar"></i>2020-06-23</div>
-                <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 1 min read</div>
-                <div class="posttag">
-                    
-                    <a href="https://Orime112.github.io/tag/TPOYLBbnB/" class="postlink">
-                        <i class="fa fa-tag"></i> nest.js
-                    </a>
-                    
-                </div>
-            </div>
-            
-        <div id="texttitle" style="text-align: center">
-            <h2>nest.js后端开发配置</h2>
-            <!-- id 将作为查询条件 -->
-            <div id="pl" style="display:none">https://Orime112.github.io/post/nestjs-hou-duan-kai-fa-pei-zhi/</div>
-            <div id="rootaddr" style="display:none">https://Orime112.github.io</div>
-            <span id="hotnum" class="leancloud_visitors" data-flag-title="nest.js后端开发配置">
-                <h4 class="readercount">热度🔥: <i class="leancloud-visitors-count">loading...</i></h4>
-            </span>
-        </div>
-        <div class="text ">
-            <pre><code>创建一个nest.js项目
-nest new your_project_name
-创建module
-nest g mo user api
-创建controller
-nest g co user api
-创建service
-nest g s user api
-</code></pre>
+        /*����״̬ ͸����Ϊ0*/
+        100% {
+            opacity: 1;
+        }
 
-        </div>
-        
-        
-        <div class="next-post">
-            下一篇
-            <a href="https://Orime112.github.io/post/xin-jian-wen-zhang-a/">
-                新建文章啊
-            </a>
-        </div>
-        
-    </div>
-    </div>
-</body>
-<script>
-    var t_img; // 定时�?
-    var isLoad = true; // 控制变量
-    isImgLoad(function () {
-        // 加载完成
-        $('.postdetailimg').css("display", "block");
-    });
-    // 判断图片加载的函�?
-    function isImgLoad(callback) {
-        // 注意我的图片类名都是cover，因为我�?需要�?�理cover。其它图片可以不管�?
-        // 查找所有封面图，迭代�?�理
-        $('.postdetailimg').each(function () {
-            // 找到�?0就将isLoad设为false，并退出each
-            if (this.height === 0) {
-                isLoad = false;
-                return false;
-            }
-        });
-        // 为true，没有发现为0的。加载完�?
-        if (isLoad) {
-            clearTimeout(t_img); // 清除定时�?
-            // 回调函数
-            callback();
-            // 为false，因为找到了没有加载完成的图，将调用定时器递归
-        } else {
-            isLoad = true;
-            t_img = setTimeout(function () {
-                isImgLoad(callback); // 递归�?�?
-            }, 500); // 我这里�?�置的是500�?秒就�?描一次，�?以自己调�?
+        /*����״̬ ͸����Ϊ1*/
+    }
+
+    @-webkit-keyframes fade-in {
+
+        /*���webkit�ں�*/
+        0% {
+            opacity: 0;
+        }
+
+        40% {
+            opacity: 0;
+        }
+
+        100% {
+            opacity: 1;
         }
     }
 
-    //文章阅读热度
-    var pl = $("#pl").html();
-    var rootaddr = $("#rootaddr").html();
-    pl = pl.replace(rootaddr, "");
-    $("#hotnum").attr('id', pl);
-</script>
-        <div name="comment" style="background: white;margin-top:100px">
-            <div class="commentcontainer">
+    .postimage {
+        width: 100%;
+    }
+
+    .tag-container {
+        min-height: 100vh;
+        animation: fade-in;
+        /*��������*/
+        animation-duration: 1s;
+        /*��������ʱ��*/
+        -webkit-animation: fade-in 1s;
+        /*���webkit�ں�*/
+    }
+
+    @media screen and (max-width:1300px) {
+        .tag-container {
+            margin-top: 100px;
+            animation: fade-in;
+            /*��������*/
+            animation-duration: 1s;
+            /*��������ʱ��*/
+            -webkit-animation: fade-in 1s;
+            /*���webkit�ں�*/
+        }
+    }
+</style>
+<link rel="stylesheet" href="https://Orime112.github.io/media/css/font-awesome.css">
+<div class="tag-container">
+    
+    <div class="postshow">
+        
+        <div id="post" style="width:100%">
+            <img src="https://Orime112.github.io/post-images/nestjs-hou-duan-kai-fa-pei-zhi.jpg" class="postimage"
+                onclick="window.location.href= 'https://Orime112.github.io/post/nestjs-hou-duan-kai-fa-pei-zhi/';return false">
+            <div class="posttitlebox">
+                <div class="posttitle" onclick="window.location.href= 'https://Orime112.github.io/post/nestjs-hou-duan-kai-fa-pei-zhi/';return false">
+                    nest.js后端开发配置
+                </div>
+            </div>
+        </div>
+        <div class="postinfo">
+            <div class="postdate"><i class="fa fa-calendar"></i>2020-06-23</div>
+            <div class="poststatus postdate"><i class="fa fa-clock-o"></i> 1 min read</div>
+            <div class="posttag">
                 
-                <p>请到客户端“主题--自定义配置--valine”中填入ID和KEY</p>
+                <a href="https://Orime112.github.io/tag/TPOYLBbnB/" class="postlink">
+                    <i class="fa fa-tag"></i> nest.js
+                </a>
                 
             </div>
+        </div>
+        
+</div>
+
+</div>
+        <div class="pagination-container">
+            
+            
         </div>
     </div>
     <div id="landlord">
@@ -561,31 +566,10 @@ nest g s user api
         <canvas id="live2d" width="240" height="250" class="live2d"></canvas>
     </div>
 </body>
-<script src="https://Orime112.github.io/media/js/post.js"></script>
-<script>
-    //寻找所有code标签，加复制按钮鸭！
-    var codes = document.getElementsByTagName('code');
-    if (codes.length) {
-        for (var i = 0; i < codes.length; i++) {
-            var code_id = "code_id_" + i;
-            var btn = document.createElement("button");
-            btn.setAttribute("class", "copybt");
-            btn.setAttribute("data-clipboard-target", "#" + code_id);
-            codes[i].setAttribute("id", code_id);
-            btn.innerHTML = '复制代码';
-            codes[i].parentNode.insertBefore(btn, codes[i]);
-        }
-    };
-    var cop = new ClipboardJS('.copybt');
-    cop.on('success', function (e) {
-        alert("代码复制成功了哦");
-        e.clearSelection();
-    });
-    cop.on('error', function (e) {
-        alert("矮油，复制失败了...手动复制吧勇士！");
-        e.clearSelection();
-    });
-</script>
+
+</html>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+<script src="https://Orime112.github.io/media/js/index.js"></script>
 
 <script type="text/javascript">
     var message_Path = '/live2d/'
@@ -595,19 +579,4 @@ nest g s user api
 <script type="text/javascript" src="https://Orime112.github.io/media/live2d/js/message.js"></script>
 <script type="text/javascript">
     loadlive2d("live2d", "https://Orime112.github.io/media/live2d/assets/tororo.model.json");
-</script>
-
-<script>
-$(function () {
-    $('.toggleContainer').click(function(){$('html,body').animate({scrollTop: '0px'}, 800);});
-	$(window).scroll(function() {
-        var st = $(window).scrollTop();
-        if(st > 30){
-            $(".toggleContainer").fadeIn(400);
-        }else{
-            $(".toggleContainer").fadeOut(100);
-        }
-	});
-});
-
 </script>
