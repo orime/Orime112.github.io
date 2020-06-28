@@ -9,7 +9,7 @@
 <meta name="description" content="温故而知新">
 <meta name="theme-color" content="#000">
 <title>个人小站</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1593323099691">
+<link rel="shortcut icon" href="/favicon.ico?v=1593323133843">
 <link rel="stylesheet" href="/media/css/mist.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -194,19 +194,19 @@
     <div class="sidebar-item-box">
       <a href="/archives/">
         
-        <span class="site-item-stat-count">2</span>
+        <span class="site-item-stat-count">3</span>
         <span class="site-item-stat-name language" data-lan="article">文章</span>
       </a>
     </div>
     <div class="sidebar-item-box">
       <a href="">
-        <span class="site-item-stat-count">3</span>
+        <span class="site-item-stat-count">4</span>
         <span class="site-item-stat-name language" data-lan="category">分类</span>
       </a>
     </div>
     <div class="sidebar-item-box">
       <a href="/tags/">
-        <span class="site-item-stat-count">3</span>
+        <span class="site-item-stat-count">4</span>
         <span class="site-item-stat-name language" data-lan="tag">标签</span>
       </a>
     </div>
@@ -243,6 +243,10 @@
           <small class="language" data-lan="tag">标签</small>
         </h2>
       </div>
+      
+      
+      
+      
       
       
       
@@ -1031,6 +1035,805 @@
       <hr>
     </div>
     <div class="result" id="result">
+      
+      <div class="item">
+        <a class="result-title" style="opacity: 0;" href="https://Orime112.github.io/post/nestjs-hou-duan-kai-fa-pei-zhi/"" data-c="
+          &lt;h1 id=&#34;社区系统nestjs后端搭建&#34;&gt;社区系统nest.js后端搭建&lt;/h1&gt;
+&lt;p&gt;&lt;a name=&#34;Gi1Vx&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;后端技术栈&#34;&gt;后端技术栈：&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;nest.js&lt;/li&gt;
+&lt;li&gt;MySQL&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a name=&#34;1nByy&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;一-环境搭建&#34;&gt;一、环境搭建&lt;/h1&gt;
+&lt;ol&gt;
+&lt;li&gt;全局安装``&lt;/li&gt;
+&lt;li&gt;使用命令&lt;code&gt;nestjs new project-name&lt;/code&gt;创建nest脚手架项目&lt;/li&gt;
+&lt;/ol&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;npm i -g @nestjs/cli
+nest new project-name
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ol start=&#34;3&#34;&gt;
+&lt;li&gt;选择包管理工具时候选择&lt;code&gt;yarn&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;vscode中打开项目&lt;/li&gt;
+&lt;li&gt;启动项目：&lt;code&gt;yarn start&lt;/code&gt;或&lt;code&gt;yarn run start&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;a name=&#34;tGkB7&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;注意点&#34;&gt;注意点&lt;/h3&gt;
+&lt;p&gt;&lt;a name=&#34;8dYx0&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;1-配置全局路由&#34;&gt;1、配置全局路由&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;app.setGlobalPrefix（）&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;只需要在 main.ts 中加上app.setGlobalPrefix(&#39;全局路由名称&#39;)&lt;/code&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;sQZxA&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;2-热更新&#34;&gt;2、热更新：&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;yarn start:dev&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a name=&#34;RO8eJ&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;3-debug模式&#34;&gt;3、debug模式：&lt;/h4&gt;
+&lt;ul&gt;
+&lt;li&gt;根目录下.vscode文件夹新增文件：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a name=&#34;6PAaT&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;二-增量开发新增模块&#34;&gt;二、增量开发·新增模块&lt;/h1&gt;
+&lt;hr&gt;
+&lt;p&gt;&lt;a name=&#34;6OSqx&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;nest三剑客&#34;&gt;nest三剑客&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;nest.js中核心概念为module、controller、service&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Controller&lt;/code&gt;：传统意义上的控制器，提供 api 接口，负责处理路由、中转、验证等一些简洁的业务；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Service&lt;/code&gt;：又称为 &lt;code&gt;Provider&lt;/code&gt;， 是一系列服务、repo、工厂方法、helper 的总称，主要负责处理具体的业务，如数据库的增删改查、事务、并发等逻辑代码；&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;code&gt;Module&lt;/code&gt;：负责将 &lt;code&gt;Controller&lt;/code&gt; 和 &lt;code&gt;Service&lt;/code&gt; 连接起来，类似于 &lt;code&gt;namespace&lt;/code&gt; 的概念；&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a name=&#34;XR0Er&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;新增user模块&#34;&gt;新增&lt;code&gt;user&lt;/code&gt;模块&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;快捷方式：nest-cli提供的指令可以快速创建文件&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;nest g [文件类型:mo,co,s] [文件名] [文件目录(默认为src/+ xxx)]
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;创建原则：先创建module，后创建service和controller，因为先创建module的话， module会被自动引入app.module.ts，避免了增量模块的controller和service重复引入。&lt;/li&gt;
+&lt;/ul&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code&gt;nest g mo user api&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;nest g co user api&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;nest g s user api&lt;/code&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;img src=&#34;https://cdn.nlark.com/yuque/0/2020/png/513194/1592904510523-11f20373-4ef5-4613-b2ac-7f846bc14d59.png#align=left&amp;amp;display=inline&amp;amp;height=300&amp;amp;margin=%5Bobject%20Object%5D&amp;amp;name=image.png&amp;amp;originHeight=472&amp;amp;originWidth=603&amp;amp;size=157164&amp;amp;status=done&amp;amp;style=none&amp;amp;width=383&#34; alt=&#34;image.png&#34; loading=&#34;lazy&#34;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;oUeee&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;三-连接mysql数据库&#34;&gt;三、连接MySQL数据库&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;由于typeorm是typescript中最成熟的对象关系映射器（ORM），采用typescript编写&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;安装依赖包&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;yarn add @nestjs/typeorm typeorm mysql
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;@nestjs/typeorm主要提供：
+&lt;ul&gt;
+&lt;li&gt;{ TypeOrmModule } ：在app.module.ts中加入到import数组项中，调用forRoot方法传入配置项，可启用与MySQL数据库的连接&lt;/li&gt;
+&lt;li&gt;
+&lt;br /&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;1、app.module.ts中引入并使用TypeOrmModule&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;import { TypeOrmModule } from &#39;@nestjs/typeorm&#39;
+
+@Module({
+	imports: [TypeOrmModule.forRoot(), ]
+  ...
+})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;根目录下创建&lt;code&gt;ormconfig.json&lt;/code&gt;文件，写入：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;
+module.exports = {
+  &amp;quot;type&amp;quot;: &amp;quot;mysql&amp;quot;,
+  &amp;quot;host&amp;quot;: &amp;quot;localhost&amp;quot;,
+  &amp;quot;port&amp;quot;: 3306,
+  &amp;quot;username&amp;quot;: &amp;quot;root&amp;quot;,
+  &amp;quot;password&amp;quot;: &amp;quot;xxxx&amp;quot;,
+  &amp;quot;database&amp;quot;: &amp;quot;yy_test&amp;quot;,
+  entities: process.env.NODE_ENV == &#39;ts-node&#39; ? [&amp;quot;src/entities/**/**.entity{.ts,.js}&amp;quot;] : [&amp;quot;dist/entities/**/**.entity{.ts,.js}&amp;quot;], 
+  &amp;quot;synchronize&amp;quot;: true
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;src/entities/user/User.entity.ts中创建实体类：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;import { Entity, BaseEntity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from &amp;quot;typeorm&amp;quot;;
+
+
+@Entity(&#39;user&#39;)
+export class UserEntity extends BaseEntity {
+  /**用户表主键id */
+  @PrimaryGeneratedColumn()
+  id: number;
+  /**用户名 */
+  @Column()
+  username: string;
+  /**真实姓名 */
+  @Column({default: &#39;&#39;, nullable: true})
+  realname?: string;
+  /**密码 */
+  @Column()
+  password: string;
+  /**密码盐 */
+  @Column({default: &#39;&#39;, nullable: true})
+  passwordSalt?: string;
+  /**手机号 */
+  @Column({nullable: true})
+  mobile?: number;
+  /**用户角色 */
+  // @Column({enum: [0, 1, 2, 3]}{default: &#39;&#39;, nullable: true})
+  // role?: number;
+  /**创建时间 */
+  @CreateDateColumn()
+  createAt: Date
+  /**更新时间 */
+  @UpdateDateColumn()
+  updateAt: Date
+  /**用户头像 */
+  @Column({default: &#39;&#39;, nullable: true})
+  avatar?: string
+  /**用户个人介绍 */
+  @Column({default: &#39;&#39;, nullable: true})
+  description?: string;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a name=&#34;T227f&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;&#34;&gt;&lt;/h2&gt;
+&lt;p&gt;:::info&lt;br&gt;
+注意：&lt;br /&gt;vscode的默认配置中，会屡次读取dist缓存目录而不重新编译产生bug，需要设置&lt;br /&gt;.vscode/setting.json&lt;br&gt;
+:::&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;{
+    &amp;quot;git.ignoreLimitWarning&amp;quot;: true,
+    &amp;quot;typescript.preferences.importModuleSpecifier&amp;quot;: &amp;quot;relative&amp;quot;,
+    &amp;quot;search.followSymlinks&amp;quot;: false,
+    &amp;quot;debug.node.autoAttach&amp;quot;: &amp;quot;off&amp;quot;,
+    &amp;quot;typescript.tsdk&amp;quot;: &amp;quot;node_modules\\typescript\\lib&amp;quot;,
+    &amp;quot;files.autoSave&amp;quot;: &amp;quot;onFocusChange&amp;quot;,
+    &amp;quot;editor.formatOnSave&amp;quot;: true,
+    &amp;quot;editor.codeActionsOnSave&amp;quot;: { &amp;quot;source.fixAll.eslint&amp;quot;: true },
+    &amp;quot;eslint.enable&amp;quot;: true
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;br /&gt;
+&lt;p&gt;&lt;a name=&#34;QplDP&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;引入实体类并使用&#34;&gt;引入实体类并使用&lt;/h2&gt;
+&lt;p&gt;&lt;br /&gt;user.module.ts&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;import { Module } from &#39;@nestjs/common&#39;;
+import { UserController } from &#39;./user.controller&#39;;
+import { UserService } from &#39;./user.service&#39;;
+import { TypeOrmModule } from &#39;@nestjs/typeorm&#39;;
+import { UserEntity } from &#39;src/entities/user/User.entity&#39;;
+
+@Module({
+  imports: [TypeOrmModule.forFeature([UserEntity])],
+  controllers: [UserController],
+  providers: [UserService],
+})
+export class UserModule {}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;user.service.ts&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;import { Injectable } from &#39;@nestjs/common&#39;;
+import { CreateUserDto } from &#39;src/common/interface/user/index.dto&#39;;
+import { UserEntity } from &#39;src/entities/user/User.entity&#39;;
+import { UserRO } from &#39;src/common/interface/user/index.interface&#39;;
+
+@Injectable()
+export class UserService {
+  /**获取所有用户 */
+  async get(name: string) {
+    console.log(name, &#39;name&#39;);
+
+    if (name === &#39;lihua&#39;) {
+      return name;
+    }
+    return &#39;&#39;;
+  }
+
+  /**新增用户 */
+  async create(data: CreateUserDto): Promise&amp;lt;UserRO&amp;gt; {
+    const newData = new UserEntity();
+    Object.assign(newData, data);
+    const user = await UserEntity.save(newData);
+    return { user };
+  }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a name=&#34;1ecI4&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;四-jwt引入并使用&#34;&gt;四、JWT引入并使用&lt;/h1&gt;
+&lt;p&gt;&lt;a name=&#34;m8RR9&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;1-jwt概念及使用流程&#34;&gt;1、JWT概念及使用流程&lt;/h2&gt;
+&lt;p&gt;&lt;a name=&#34;FQSZq&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;jwt使用流程&#34;&gt;JWT使用流程：&lt;/h3&gt;
+&lt;p&gt;所以 JWT 实现【登录】的大致流程是：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;客户端用户进行登录请求；&lt;/li&gt;
+&lt;li&gt;服务端拿到请求，根据参数查询用户表；&lt;/li&gt;
+&lt;li&gt;若匹配到用户，将用户信息进行签证，并颁发 Token；&lt;/li&gt;
+&lt;li&gt;客户端拿到 Token 后，存储至某一地方，在之后的请求中都带上 Token ；&lt;/li&gt;
+&lt;li&gt;服务端接收到带 Token 的请求后，直接根据签证进行校验，无需再查询用户信息；&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;a name=&#34;nEbRj&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;jwt组成部分&#34;&gt;JWT组成部分：&lt;/h3&gt;
+&lt;p&gt;实际的 JWT 大概就像下面这样。&lt;br /&gt;&lt;img src=&#34;https://cdn.nlark.com/yuque/0/2020/jpeg/513194/1592963982283-968772ea-c76b-400a-9016-b0bcd10e2c0b.jpeg#align=left&amp;amp;display=inline&amp;amp;height=184&amp;amp;margin=%5Bobject%20Object%5D&amp;amp;originHeight=184&amp;amp;originWidth=800&amp;amp;size=0&amp;amp;status=done&amp;amp;style=none&amp;amp;width=800&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br /&gt;它是一个很长的字符串，中间用点（&lt;code&gt;.&lt;/code&gt;）分隔成三个部分。注意，JWT 内部是没有换行的，这里只是为了便于展示，将它写成了几行。&lt;br /&gt;JWT 的三个部分依次如下。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;Header（头部）&lt;/li&gt;
+&lt;li&gt;Payload（负载）&lt;/li&gt;
+&lt;li&gt;Signature（签名）&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;写成一行，就是下面的样子。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;Header.Payload.Signature
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://cdn.nlark.com/yuque/0/2020/jpeg/513194/1592963982355-89ebbec7-57c7-475e-8320-2a71902d26ed.jpeg#align=left&amp;amp;display=inline&amp;amp;height=209&amp;amp;margin=%5Bobject%20Object%5D&amp;amp;originHeight=209&amp;amp;originWidth=800&amp;amp;size=0&amp;amp;status=done&amp;amp;style=none&amp;amp;width=800&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;dUTP9&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;1-header-部分&#34;&gt;1、Header 部分&lt;/h4&gt;
+&lt;p&gt;是一个 JSON 对象，描述 JWT 的元数据，通常是下面的样子。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;{
+  &amp;quot;alg&amp;quot;: &amp;quot;HS256&amp;quot;,
+  &amp;quot;typ&amp;quot;: &amp;quot;JWT&amp;quot;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;上面代码中，&lt;code&gt;alg&lt;/code&gt;属性表示签名的算法（algorithm），默认是 HMAC SHA256（写成 HS256）；&lt;code&gt;typ&lt;/code&gt;属性表示这个令牌（token）的类型（type），JWT 令牌统一写为&lt;code&gt;JWT&lt;/code&gt;。&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;Lj23v&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;2-payload-部分&#34;&gt;2、Payload 部分&lt;/h4&gt;
+&lt;p&gt;也是一个 JSON 对象，用来存放实际需要传递的数据。JWT 规定了7个官方字段，供选用。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;ul&gt;
+&lt;li&gt;iss (issuer)：签发人&lt;/li&gt;
+&lt;li&gt;exp (expiration time)：过期时间&lt;/li&gt;
+&lt;li&gt;sub (subject)：主题&lt;/li&gt;
+&lt;li&gt;aud (audience)：受众&lt;/li&gt;
+&lt;li&gt;nbf (Not Before)：生效时间&lt;/li&gt;
+&lt;li&gt;iat (Issued At)：签发时间&lt;/li&gt;
+&lt;li&gt;jti (JWT ID)：编号&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;除了官方字段，你还可以在这个部分定义私有字段，下面就是一个例子。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;{
+  &amp;quot;sub&amp;quot;: &amp;quot;1234567890&amp;quot;,
+  &amp;quot;name&amp;quot;: &amp;quot;John Doe&amp;quot;,
+  &amp;quot;admin&amp;quot;: true
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;注意，JWT 默认是不加密的，任何人都可以读到，所以不要把秘密信息放在这个部分。&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;EVfgw&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;3-signature-部分&#34;&gt;3、Signature 部分&lt;/h4&gt;
+&lt;p&gt;是对前两部分的签名，防止数据篡改。&lt;br /&gt;首先，需要指定一个密钥（secret）。这个密钥只有服务器才知道，不能泄露给用户。然后，使用 Header 里面指定的签名算法（默认是 HMAC SHA256），按照下面的公式产生签名。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;HMACSHA256(
+  base64UrlEncode(header) + &amp;quot;.&amp;quot; +
+  base64UrlEncode(payload),
+  secret)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用&amp;quot;点&amp;quot;（&lt;code&gt;.&lt;/code&gt;）分隔，就可以返回给用户。&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;I6Mwn&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;jwt使用方式&#34;&gt;JWT使用方式&lt;/h3&gt;
+&lt;p&gt;客户端收到服务器返回的 JWT，可以储存在 Cookie 里面，也可以储存在 localStorage。&lt;br /&gt;此后，客户端每次与服务器通信，都要带上这个 JWT。你可以把它放在 Cookie 里面自动发送，但是这样不能跨域，所以更好的做法是放在 HTTP 请求的头信息&lt;code&gt;Authorization&lt;/code&gt;字段里面。&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;Authorization: Bearer &amp;lt;token&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;另一种做法是，跨域的时候，JWT 就放在 POST 请求的数据体里面。&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;bOzWy&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;jwt特点&#34;&gt;JWT特点&lt;/h3&gt;
+&lt;p&gt;（1）JWT 默认是不加密，但也是可以加密的。生成原始 Token 以后，可以用密钥再加密一次。&lt;br /&gt;（2）JWT 不加密的情况下，不能将秘密数据写入 JWT。&lt;br /&gt;（3）JWT 不仅可以用于认证，也可以用于交换信息。有效使用 JWT，可以降低服务器查询数据库的次数。&lt;br /&gt;（4）JWT 的最大缺点是，由于服务器不保存 session 状态，因此无法在使用过程中废止某个 token，或者更改 token 的权限。也就是说，一旦 JWT 签发了，在到期之前就会始终有效，除非服务器部署额外的逻辑。&lt;br /&gt;（5）JWT 本身包含了认证信息，一旦泄露，任何人都可以获得该令牌的所有权限。为了减少盗用，JWT 的有效期应该设置得比较短。对于一些比较重要的权限，使用时应该再次对用户进行认证。&lt;br /&gt;（6）为了减少盗用，JWT 不应该使用 HTTP 协议明码传输，要使用 HTTPS 协议传输。&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;RqNC2&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;2-项目中使用jwt&#34;&gt;2、项目中使用JWT&lt;/h2&gt;
+&lt;p&gt;&lt;a name=&#34;5kYab&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;a-改造用户注册逻辑&#34;&gt;a、改造用户注册逻辑&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;创建工具函数，一个是制作一个随机盐，一个是根据盐来加密密码&lt;/li&gt;
+&lt;li&gt;注册前先查询是否有重复，有的话返回用户信息，没有就返回undefined&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;a name=&#34;YlpQ6&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;1编写加盐工具函数&#34;&gt;(1)编写加盐工具函数&lt;/h4&gt;
+&lt;p&gt;&lt;code&gt;yarn add cryptogram&lt;/code&gt;&lt;br /&gt;src/common/utitls/cryptogram.ts&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;import * as crypto from &#39;crypto&#39;;
+
+/**
+ * Make Salt
+ */
+export function makeSalt(): string {
+  return crypto.randomBytes(3).toString(&#39;base64&#39;);
+}
+
+/**
+ * Encrypt password
+ * @param password 密码
+ * @param salt 密码盐
+ */
+export function encryptPassword(password: string, salt: string): string {
+  if (!password || !salt) {
+    return &#39;&#39;;
+  }
+  const tempSalt = Buffer.from(salt, &#39;base64&#39;);
+  return (
+    // 10000 代表迭代次数，16代表长度
+    crypto.pbkdf2Sync(password, tempSalt, 10000, 16, &#39;sha1&#39;).toString(&#39;base64&#39;)
+  );
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a name=&#34;iZWTI&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h4 id=&#34;2注册前对密码进行加盐加密&#34;&gt;(2)注册前对密码进行加盐加密&lt;/h4&gt;
+&lt;p&gt;src/api/user/User.service.ts&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;import { Injectable, HttpException, HttpStatus } from &#39;@nestjs/common&#39;;
+import { CreateUserDto } from &#39;src/common/interface/user/index.dto&#39;;
+import { UserEntity } from &#39;src/entities/user/User.entity&#39;;
+import { UserRO } from &#39;src/common/interface/user/index.interface&#39;;
+import { makeSalt, encryptPassword } from &#39;../../common/utils/cryptogram&#39;;
+
+@Injectable()
+export class UserService {
+  /**获取所有用户 */
+  async get(name: string) {
+    console.log(name, &#39;name&#39;);
+
+    if (name === &#39;lihua&#39;) {
+      return name;
+    }
+    return &#39;&#39;;
+  }
+
+  /**用户查重 */
+  async findOne(username: string): Promise&amp;lt;UserRO | undefined&amp;gt; {
+    const user = await UserEntity.findOne({ username });
+    // console.log(&#39;查询得到的user&#39;, user); // 查得到就返回查询结果，查不到返回undefined
+
+    if (user) {
+      return { user };
+    } else {
+      return undefined;
+    }
+  }
+
+  /**新增用户(注册) */
+  async registrater(data: CreateUserDto): Promise&amp;lt;UserRO&amp;gt; {
+    const { password } = data;
+
+    const existUser = await this.findOne(data.username);
+    if (existUser) {
+      throw new HttpException(&#39;用户已存在&#39;, HttpStatus.BAD_REQUEST);
+    }
+    const salt = makeSalt(); // 制作密码盐
+    const hashPwd = encryptPassword(password, salt); // 加密密码
+    const newData = new UserEntity();
+    Object.assign(newData, data);
+    newData.password = hashPwd;
+    newData.salt = salt;
+    const user = await UserEntity.save(newData);
+    return { user };
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a name=&#34;7nem5&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;b-jwt配置与验证&#34;&gt;b、JWT配置与验证&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;装包：&lt;code&gt;yarn add passport passport-jwt passport-local @nestjs/passport @nestjs/jwt -S&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;同时安装类型包：&lt;code&gt;yarn add @types/passport-jwt&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;创建auth权限验证工具模块&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;nest g mo auth api
+nest g s auth api
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;参考地址：&lt;a href=&#34;https://docs.nestjs.cn/7/techniques&#34;&gt;中文文档中权限验证&lt;/a&gt;&lt;br /&gt;&lt;code&gt;Passport&lt;/code&gt;是最流行的 &lt;code&gt;node.js&lt;/code&gt; 身份验证库，为社区所熟知，并成功地应用于许多生产应用程序中。将这个库与使用 &lt;code&gt;@nestjs/passport&lt;/code&gt; 模块的 &lt;code&gt;Nest&lt;/code&gt; 应用程序集成起来非常简单。在较高级别，&lt;code&gt;Passport&lt;/code&gt; 执行一系列步骤以：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;通过验证用户的”证”(例如用户名/密码、&lt;code&gt;JSON Web&lt;/code&gt;令牌( &lt;code&gt;JWT&lt;/code&gt; )或身份提供者的身份令牌)来验证用户的身份。&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;管理经过身份验证的状态(通过发出可移植的令牌，例如 &lt;code&gt;JWT&lt;/code&gt;，或创建一个 &lt;code&gt;Express&lt;/code&gt; 会话)&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;将有关经过身份验证的用户的信息附加到请求对象，以便在路由处理程序中进一步使用&lt;br /&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;src/api/auth/auth.service.ts&lt;br /&gt;主要实现两个函数：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;validateUser根据用户名和密码，校验用户信息是否争取，返回三个不同的code和user数据&lt;/li&gt;
+&lt;li&gt;certificate处理JWT签证，传入user对象，返回token&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;import { Injectable } from &#39;@nestjs/common&#39;;
+import { UserService } from &#39;../user/user.service&#39;;
+import { JwtService } from &#39;@nestjs/jwt&#39;;
+import { encryptPassword } from &#39;../../common/utils/cryptogram&#39;;
+import { UserEntity } from &#39;../../entities/user/User.entity&#39;;
+
+@Injectable()
+export class AuthService {
+  constructor(
+    private readonly userService: UserService,
+    private readonly jwtService: JwtService,
+  ) {}
+
+  // JWT验证 - Step2：校验用户信息
+  async validateUser(username: string, password: string): Promise&amp;lt;any&amp;gt; {
+    console.log(&#39;JWT验证 - Step2：校验用户信息&#39;);
+    const rawUser = await this.userService.findOne(username);
+    if (rawUser) {
+      const hashedPassword = rawUser.user.password;
+      const salt = rawUser.user.salt;
+      // 通过密码盐，加密传参，再与数据库里的比较，判断是否相等
+      const hashPassword = encryptPassword(password, salt);
+      if (hashedPassword === hashPassword) {
+        // 密码正确
+        // console.log(&#39;密码正确后的rawUser&#39;, rawUser);
+        return {
+          code: 1,
+          user: rawUser.user,
+        };
+      } else {
+        // 密码错误
+        return {
+          code: 2,
+          user: null,
+        };
+      }
+    } else {
+      return {
+        code: 3,
+        user: null,
+      };
+    }
+  }
+
+  // JWT验证 - step3： 处理jwt签证
+  async certificate(user: UserEntity) {
+    const payload = {
+      username: user.username,
+      sub: user.id,
+      realname: user.realname,
+      role: user.role,
+    };
+    console.log(&#39;JWT验证 - Step 3: 处理JWT签证&#39;);
+    try {
+      const token = this.jwtService.sign(payload);
+      return {
+        code: 200,
+        data: {
+          token,
+        },
+        msg: &#39;登陆成功&#39;,
+      };
+    } catch (error) {
+      return {
+        code: 600,
+        msg: &#39;账号或密码错误&#39;,
+      };
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;src/auth/constants.ts编写签发JWT用的常量&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;export const jwtConstants = {
+  secret: &#39;shinobi7414&#39;, // 密钥
+};
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;src/auth/jwt.strategy.ts编写jwt路由守卫验证策略&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;指定token从BearerToken中获取&lt;/li&gt;
+&lt;li&gt;指定密钥从常量中获取&lt;/li&gt;
+&lt;li&gt;返回req.user对象&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// src/logical/auth/jwt.strategy.ts
+import { ExtractJwt, Strategy } from &#39;passport-jwt&#39;;
+import { PassportStrategy } from &#39;@nestjs/passport&#39;;
+import { Injectable } from &#39;@nestjs/common&#39;;
+import { jwtConstants } from &#39;./constants&#39;;
+
+@Injectable()
+export class JwtStrategy extends PassportStrategy(Strategy) {
+  constructor() {
+    super({
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ignoreExpiration: false,
+      secretOrKey: jwtConstants.secret,
+    });
+  }
+
+  // JWT验证 - Step 4: 被守卫调用
+  async validate(payload: any) {
+    console.log(`JWT验证 - Step 4: 被守卫调用`);
+    return {
+      userId: payload.sub,
+      username: payload.username,
+      realName: payload.realName,
+      role: payload.role,
+    };
+  }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;src/auth/auth.module.ts中处理相关依赖&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;指定token过期时间为8h&lt;/li&gt;
+&lt;li&gt;将本地策略、jwt策略和依赖的UserService全部引入&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;import { Module } from &#39;@nestjs/common&#39;;
+import { AuthService } from &#39;./auth.service&#39;;
+import { LocalStrategy } from &#39;./local.strategy&#39;;
+import { JwtStrategy } from &#39;./jwt.strategy&#39;;
+import { UserModule } from &#39;../user/user.module&#39;;
+import { PassportModule } from &#39;@nestjs/passport&#39;;
+import { JwtModule } from &#39;@nestjs/jwt&#39;;
+import { jwtConstants } from &#39;./constants&#39;;
+import { UserService } from &#39;../user/user.service&#39;;
+
+@Module({
+  imports: [
+    PassportModule.register({ defaultStrategy: &#39;jwt&#39; }),
+    JwtModule.register({
+      secret: jwtConstants.secret,
+      signOptions: { expiresIn: &#39;8h&#39; }, // token 过期时效
+    }),
+    UserModule,
+  ],
+  providers: [AuthService, LocalStrategy, JwtStrategy, UserService],
+  exports: [AuthService, UserService],
+})
+export class AuthModule {}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;strong&gt;处理依赖：&lt;/strong&gt; &lt;br /&gt;user.module.ts中去除引入的UserController，而是放入到app.module.ts中注册&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;IRgNM&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;五-使用中间件-拦截器-过滤器打造日志系统&#34;&gt;五、使用中间件、拦截器、过滤器打造日志系统&lt;/h1&gt;
+&lt;p&gt;&lt;a name=&#34;hdmSS&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h2 id=&#34;日志系统&#34;&gt;📜日志系统&lt;/h2&gt;
+&lt;p&gt;&lt;a name=&#34;irmRm&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;1-配置&#34;&gt;1. 配置&lt;/h3&gt;
+&lt;p&gt;先安装依赖包&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;$ yarn add log4js stacktrace-js -S
+复制代码
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;在 config 目录下新建一个文件 &lt;code&gt;log4js.ts&lt;/code&gt;，用于编写配置文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;// config/log4js.ts
+import * as path from &#39;path&#39;;
+const baseLogPath = path.resolve(__dirname, &#39;../../logs&#39;); // 日志要写入哪个目录
+const log4jsConfig = {
+  appenders: {
+    console: {
+      type: &#39;console&#39;, // 会打印到控制台
+    },
+    access: {
+      type: &#39;dateFile&#39;, // 会写入文件，并按照日期分类
+      filename: `${baseLogPath}/access/access.log`, // 日志文件名，会命名为：access.20200320.log
+      alwaysIncludePattern: true,
+      pattern: &#39;yyyyMMdd&#39;,
+      daysToKeep: 60,
+      numBackups: 3,
+      category: &#39;http&#39;,
+      keepFileExt: true, // 是否保留文件后缀
+    },
+    app: {
+      type: &#39;dateFile&#39;,
+      filename: `${baseLogPath}/app-out/app.log`,
+      alwaysIncludePattern: true,
+      layout: {
+        type: &#39;pattern&#39;,
+        pattern: &#39;{&amp;quot;date&amp;quot;:&amp;quot;%d&amp;quot;,&amp;quot;level&amp;quot;:&amp;quot;%p&amp;quot;,&amp;quot;category&amp;quot;:&amp;quot;%c&amp;quot;,&amp;quot;host&amp;quot;:&amp;quot;%h&amp;quot;,&amp;quot;pid&amp;quot;:&amp;quot;%z&amp;quot;,&amp;quot;data&amp;quot;:\&#39;%m\&#39;}&#39;,
+      },
+      // 日志文件按日期（天）切割
+      pattern: &#39;yyyyMMdd&#39;,
+      daysToKeep: 60,
+      // maxLogSize: 10485760,
+      numBackups: 3,
+      keepFileExt: true,
+    },
+    errorFile: {
+      type: &#39;dateFile&#39;,
+      filename: `${baseLogPath}/errors/error.log`,
+      alwaysIncludePattern: true,
+      layout: {
+        type: &#39;pattern&#39;,
+        pattern: &#39;{&amp;quot;date&amp;quot;:&amp;quot;%d&amp;quot;,&amp;quot;level&amp;quot;:&amp;quot;%p&amp;quot;,&amp;quot;category&amp;quot;:&amp;quot;%c&amp;quot;,&amp;quot;host&amp;quot;:&amp;quot;%h&amp;quot;,&amp;quot;pid&amp;quot;:&amp;quot;%z&amp;quot;,&amp;quot;data&amp;quot;:\&#39;%m\&#39;}&#39;,
+      },
+      // 日志文件按日期（天）切割
+      pattern: &#39;yyyyMMdd&#39;,
+      daysToKeep: 60,
+      // maxLogSize: 10485760,
+      numBackups: 3,
+      keepFileExt: true,
+    },
+    errors: {
+      type: &#39;logLevelFilter&#39;,
+      level: &#39;ERROR&#39;,
+      appender: &#39;errorFile&#39;,
+    },
+  },
+  categories: {
+    default: {
+      appenders: [&#39;console&#39;, &#39;app&#39;, &#39;errors&#39;],
+      level: &#39;DEBUG&#39;,
+    },
+    info: { appenders: [&#39;console&#39;, &#39;app&#39;, &#39;errors&#39;], level: &#39;info&#39; },
+    access: { appenders: [&#39;console&#39;, &#39;app&#39;, &#39;errors&#39;], level: &#39;info&#39; },
+    http: { appenders: [&#39;access&#39;], level: &#39;DEBUG&#39; },
+  },
+  pm2: true, // 使用 pm2 来管理项目时，打开
+  pm2InstanceVar: &#39;INSTANCE_ID&#39;, // 会根据 pm2 分配的 id 进行区分，以免各进程在写日志时造成冲突
+};
+export default log4jsConfig;
+复制代码
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;上面贴出了我的配置，并标注了一些简单的注释，请配合 &lt;a href=&#34;https://juejin.im/post/57b962af7db2a200542a0fb3&#34;&gt;《Node.js 之 log4js 完全讲解》&lt;/a&gt; 一起食用。&lt;br /&gt;&lt;br&gt;
+&lt;br /&gt;参考地址：&lt;a href=&#34;https://juejin.im/post/5e7460a5e51d4526ca15efa3&#34;&gt;https://juejin.im/post/5e7460a5e51d4526ca15efa3&lt;/a&gt;&lt;br /&gt;&lt;br&gt;
+&lt;br /&gt;&lt;br&gt;
+&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;Nvcwo&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;六-使用管道-dto验证入参&#34;&gt;六、使用管道、DTO验证入参&lt;/h1&gt;
+&lt;p&gt;&lt;a name=&#34;3DAez&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;1-概念&#34;&gt;1. 概念&lt;/h3&gt;
+&lt;p&gt;管道和拦截器有点像，都是在数据传输过程中的“关卡”，只不过各司其职。&lt;br /&gt;管道有两个类型:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;转换：管道将输入数据转换为所需的数据输出；&lt;/li&gt;
+&lt;li&gt;验证：对输入数据进行验证，如果验证成功继续传递，验证失败则抛出异常；&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;ValidationPipe&lt;/code&gt; 是 Nest.js 自带的三个开箱即用的管道之一（另外两个是 &lt;code&gt;ParseIntPipe&lt;/code&gt; 和 &lt;code&gt;ParseUUIDPipe&lt;/code&gt;，现在还用不到）。&lt;br /&gt;&lt;code&gt;ValidationPipe&lt;/code&gt; 只接受一个值并立即返回相同的值，其行为类似于一个标识函数，标准代码如下：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;import { PipeTransform, Injectable, ArgumentMetadata } from &#39;@nestjs/common&#39;;
+@Injectable()
+export class ValidationPipe implements PipeTransform {
+  transform(value: any, metadata: ArgumentMetadata) {
+    return value;
+  }
+}
+复制代码
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;每个管道必须提供 &lt;code&gt;transform()&lt;/code&gt; 方法。 这个方法有两个参数：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;value&lt;/li&gt;
+&lt;li&gt;metadata&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;code&gt;value&lt;/code&gt; 是当前处理的参数，而 &lt;code&gt;metadata&lt;/code&gt; 是其元数据。&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;M6bh8&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&#34;2-创建管道&#34;&gt;2. 创建管道&lt;/h3&gt;
+&lt;p&gt;简单介绍完一些概念后，开始实战，先创建 pipe 文件：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ nest g pipe validation pipe
+复制代码
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;这里我们还需要安装两个依赖包：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;$ yarn add class-validator class-transformer -S
+复制代码
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;然后在 &lt;code&gt;validation.pipe.ts&lt;/code&gt; 中编写验证逻辑：&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;// src/pipe/validation.pipe.ts
+import { ArgumentMetadata, Injectable, PipeTransform, BadRequestException } from &#39;@nestjs/common&#39;;
+import { validate } from &#39;class-validator&#39;;
+import { plainToClass } from &#39;class-transformer&#39;;
+import { Logger } from &#39;../utils/log4js&#39;;
+@Injectable()
+export class ValidationPipe implements PipeTransform {
+  async transform(value: any, { metatype }: ArgumentMetadata) {
+    console.log(`value:`, value, &#39;metatype: &#39;, metatype);
+    if (!metatype || !this.toValidate(metatype)) {
+      // 如果没有传入验证规则，则不验证，直接返回数据
+      return value;
+    }
+    // 将对象转换为 Class 来验证
+    const object = plainToClass(metatype, value);
+    const errors = await validate(object);
+    if (errors.length &amp;gt; 0) {
+      const msg = Object.values(errors[0].constraints)[0]; // 只需要取第一个错误信息并返回即可
+      Logger.error(`Validation failed: ${msg}`);
+      throw new BadRequestException(`Validation failed: ${msg}`);
+    }
+    return value;
+  }
+  private toValidate(metatype: any): boolean {
+    const types: any[] = [String, Boolean, Number, Array, Object];
+    return !types.includes(metatype);
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;在使用参数验证的controller中引入管道&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;import { ValidationPipe } from &#39;../../pipe/validation.pipe&#39;;
+
+@UsePipes(new ValidationPipe())
+@Post()
+async create(@Body() data: CreateUserDTO)
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;在DTO中定义验证规则：&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;src/common/interface/user/index.dto.ts&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;import { IsNotEmpty, IsNumber, IsString } from &#39;class-validator&#39;;
+
+export class CreateUserDTO {
+  @IsNotEmpty({ message: &#39;用户名不能为空&#39; })
+  readonly username: string;
+  @IsNotEmpty({ message: &#39;密码不能为空&#39; })
+  readonly password: string;
+  readonly mobile: string;
+}
+
+export class LoginDTO {
+  @IsNotEmpty({ message: &#39;用户名不能为空&#39; })
+  readonly username: string;
+  @IsNotEmpty({ message: &#39;密码不能为空&#39; })
+  readonly password: string;
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a name=&#34;QohXc&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;七-实现rbac-0&#34;&gt;七、实现RBAC 0&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;nest g interceptor rbac interceptor
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;// src/interceptor/rbac.interceptor.ts
+import {
+  CallHandler,
+  ExecutionContext,
+  Injectable,
+  NestInterceptor,
+  ForbiddenException,
+} from &#39;@nestjs/common&#39;;
+import { Observable } from &#39;rxjs&#39;;
+
+@Injectable()
+export class RbacInterceptor implements NestInterceptor {
+  // role[用户角色]: 0-超级管理员 | 1-管理员 | 2-开发&amp;amp;测试&amp;amp;运营 | 3-普通用户（只能查看）
+  constructor(private readonly role: number) {}
+  intercept(context: ExecutionContext, next: CallHandler): Observable&amp;lt;any&amp;gt; {
+    const req = context.getArgByIndex(1).req;
+    if (req.user.role &amp;gt; this.role) {
+      console.log(`用户权限：${req.user.role}，功能所需权限：${this.role}`);
+      throw new ForbiddenException(&#39;对不起，您无权操作&#39;);
+    }
+    return next.handle();
+  }
+}
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;nest g guard rbac guards
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;// src/guards/rbac.guard.ts
+import { CanActivate, ExecutionContext, Injectable, ForbiddenException } from &#39;@nestjs/common&#39;;
+import { Observable } from &#39;rxjs&#39;;
+
+@Injectable()
+export class RbacGuard implements CanActivate {
+  // role[用户角色]: 0-超级管理员 | 1-管理员 | 2-开发&amp;amp;测试&amp;amp;运营 | 3-普通用户（只能查看）
+  constructor(private readonly role: number) {}
+  canActivate(
+    context: ExecutionContext,
+  ): boolean | Promise&amp;lt;boolean&amp;gt; | Observable&amp;lt;boolean&amp;gt; {
+    const request = context.switchToHttp().getRequest();
+    const user = request.user;
+    if (user.role &amp;gt; this.role) {
+      throw new ForbiddenException(&#39;对不起，您无权操作&#39;);
+    }
+    return true;
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;import { RbacGuard } from &#39;../../guards/rbac.guard&#39;;
+
+  // 查询商品列表
+  @UseGuards(new RbacGuard(role.HUMAN))
+  @UseGuards(AuthGuard(&#39;jwt&#39;))
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a name=&#34;KTz7C&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;八-自动生成swagger文档&#34;&gt;八、自动生成swagger文档&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-typescript&#34;&gt;yarn add @nestjs/swagger swagger-ui-express -S
+&lt;/code&gt;&lt;/pre&gt;
+">nest.js后端开发配置</a>
+      </div>
       
       <div class="item">
         <a class="result-title" style="opacity: 0;" href="https://Orime112.github.io/post/mianshi/"" data-c="
