@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Orime112.github.io</id>
     <title>个人小站</title>
-    <updated>2020-06-28T05:42:09.177Z</updated>
+    <updated>2020-06-28T05:45:02.867Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Orime112.github.io"/>
     <link rel="self" href="https://Orime112.github.io/atom.xml"/>
@@ -10,23 +10,6 @@
     <logo>https://Orime112.github.io/images/avatar.png</logo>
     <icon>https://Orime112.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 个人小站</rights>
-    <entry>
-        <title type="html"><![CDATA[nest.js后端开发配置]]></title>
-        <id>https://Orime112.github.io/post/nestjs-hou-duan-kai-fa-pei-zhi/</id>
-        <link href="https://Orime112.github.io/post/nestjs-hou-duan-kai-fa-pei-zhi/">
-        </link>
-        <updated>2020-06-23T06:07:10.000Z</updated>
-        <content type="html"><![CDATA[<pre><code>创建一个nest.js项目
-nest new your_project_name
-创建module
-nest g mo user api
-创建controller
-nest g co user api
-创建service
-nest g s user api
-</code></pre>
-]]></content>
-    </entry>
     <entry>
         <title type="html"><![CDATA[常见面试题总结（四）Css骚操作、图片懒加载，手写promise等]]></title>
         <id>https://Orime112.github.io/post/mianshi/</id>
