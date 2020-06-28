@@ -8,7 +8,7 @@
 <meta name="keywords" content="Gridea静态个人博客">
 <meta name="description" content="温故而知新">
 <meta name="theme-color" content="#000">
-<title>个人小站</title>
+<title>常见面试题总结（四）Css骚操作、图片懒加载，手写promise等 | 个人小站</title>
 <link rel="shortcut icon" href="/favicon.ico?v=1593322902387">
 <link rel="stylesheet" href="/media/css/mist.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
@@ -38,6 +38,8 @@
 
 
 
+  <meta name="description" content="常见面试题总结（四）Css骚操作、图片懒加载，手写promise等" />
+  <meta name="keywords" content="react,思考" />
 </head>
 
 <body>
@@ -77,7 +79,7 @@
             
               
             
-            <li class="nav-item nav-item-active">
+            <li class="nav-item ">
               
               
                 <a href="/" target="_self">
@@ -176,8 +178,24 @@
     <div
       class="section-layout mist bg-color">
       <div class="section-layout-wrapper">
-        <div id="sidebarMeta" class="sidebar">
-    
+        
+
+<div class="sidebar">
+  
+    <div class="sidebar-box box-shadow-wrapper  right-motion" id="sidebar">
+      
+        <div class="post-list-sidebar">
+          <div class="sidebar-title">
+            <span id="tocSideBar" class="sidebar-title-item sidebar-title-active language" data-lan="index">文章目录</span>
+            <span id="metaSideBar" class="sidebar-title-item language" data-lan="preview">站点概览</span>
+          </div>
+        </div>
+      
+      <div class="sidebar-body mist" id="sidebar_body">
+        
+          
+            <div class="post-side-meta" id="post_side_meta">
+              
 <div class="sidebar-wrapper box-shadow-wrapper ">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
@@ -217,99 +235,283 @@
 
 
 </div>
+            </div>
+            <div class="post-toc sidebar-body-active" id="post_toc" style="opacity: 1;">
+              <div class="toc-box right-motion">
+  <div class="toc-wrapper auto-number auto"
+    id="toc_wrapper">
+    <ul class="markdownIt-TOC">
+<li><a href="#1-css%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E6%89%87%E5%BD%A2">1、Css实现一个扇形</a></li>
+<li><a href="#2-css-%E4%B8%ADtransition%E5%92%8Canimate%E6%9C%89%E4%BD%95%E5%8C%BA%E5%88%ABanimate%E5%A6%82%E4%BD%95%E5%81%9C%E7%95%99%E5%9C%A8%E6%9C%80%E5%90%8E%E4%B8%80%E5%B8%A7">2、CSS 中<code>transition</code>和<code>animate</code>有何区别?<code>animate</code>如何停留在最后一帧!</a></li>
+<li><a href="#3-js%E5%AE%9E%E7%8E%B0stringtrim%E6%96%B9%E6%B3%95">3、JS实现String.trim()方法</a></li>
+<li><a href="#4-virtual-dom-%E7%9A%84%E4%BC%98%E5%8A%BF%E5%9C%A8%E5%93%AA%E9%87%8C">4、Virtual Dom 的优势在哪里？</a></li>
+<li><a href="#5-js%E5%AE%9E%E7%8E%B0%E5%9B%BE%E7%89%87%E6%87%92%E5%8A%A0%E8%BD%BD">5、JS实现图片懒加载</a></li>
+<li><a href="#6-%E7%BB%99%E5%AE%9A%E4%B8%80%E4%B8%AA%E6%95%B4%E6%95%B0%E6%95%B0%E7%BB%84%E6%89%BE%E5%87%BA%E5%85%B7%E6%9C%89%E6%9C%80%E5%A4%A7%E5%92%8C%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84%E8%BF%94%E5%9B%9E%E6%9C%80%E5%A4%A7%E5%92%8C">6、给定一个整数数组，找出具有最大和的子数组，返回最大和</a></li>
+<li><a href="#7-%E5%AE%9E%E7%8E%B0%E4%B8%80%E4%B8%AA%E5%9F%BA%E6%9C%AC%E7%9A%84promise">7、实现一个基本的promise</a></li>
+</ul>
+
+  </div>
 </div>
+
 <script>
-  let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = 'mist';
-  let sidebarWrapper = document.querySelector('.sidebar-wrapper');
-  if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
-    document.addEventListener('scroll', function(e) {
-      if (document.scrollingElement.scrollTop > parseInt(sidebarMeta.style.marginTop) + 10) {
-        sidebarWrapper.classList.add('home-sidebar-fixed')
-      } else {
-        sidebarWrapper.classList.remove('home-sidebar-fixed')
+
+  let lastTop = 0, lList = [], hList = [], postBody, lastIndex = -1;
+  let active = 'active-show', activeClass = 'active-current';
+  let tocWrapper = document.querySelector('#toc_wrapper');
+  let tocContent = tocWrapper.children[0];
+  let autoNumber = tocWrapper && tocWrapper.classList.contains('auto-number');
+
+  function addTocNumber(elem, deep) {
+    if (!elem) {
+      return;
+    }
+    let prop = elem.__proto__;
+
+    if (prop === HTMLUListElement.prototype) {
+      for (let i = 0; i < elem.children.length; i++) {
+        addTocNumber(elem.children[i], deep + (i + 1) + '.');
       }
+    } else if (prop === HTMLLIElement.prototype) {
+      // 保存li元素
+      if (elem.children[0] && elem.children[0].__proto__ === HTMLAnchorElement.prototype) {
+        lList.push(elem);
+      }
+      for (let i = 0; i < elem.children.length; i++) {
+        let cur = elem.children[i];
+        if (cur.__proto__ === HTMLAnchorElement.prototype) {
+          if (autoNumber) {
+            cur.text = deep + ' ' + cur.text;
+          }
+        } else if (cur.__proto__ === HTMLUListElement.prototype) {
+          addTocNumber(cur, deep);
+        }
+      }
+    }
+  }
+
+  function removeParentActiveClass() {
+    let parents = tocContent.querySelectorAll('.' + active)
+    parents.forEach(function (elem) {
+      elem.classList.remove(active);
     });
   }
-  </script>
-        <div class="section-box mist">
-          <section class="section bg-color posts-expand slide-down-in">
-            
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://Orime112.github.io/post/nestjs-hou-duan-kai-fa-pei-zhi/">
-      nest.js后端开发配置
-    </a>
-  </h1>
-  <div class="post-meta">
-    
-    <span class="meta-item">
-      <i class="fa fa-thumb-tack"></i>
-      <span class="language" data-lan="top">置顶</span>
-      <span class="post-meta-divider">|</span>
-    </span>
-    
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span class="language" data-lan="publish">发布于</span>
-      <span>2020-06-23</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
-    
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://Orime112.github.io/tag/TPOYLBbnB/">
-        <span>nest.js</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
-    
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>1<span class="language" data-lan="minute">分钟</span></span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>35<span class="pc-show language" data-lan="words">字数</span></span>
-    </span>
-    
-  </div>
-</header>
-      <div class="post-body">
-        
-        
+
+  function addActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.add(activeClass);
+    }
+  }
+
+  function removeActiveClass(index) {
+    if (index >= 0 && index < hList.length) {
+      lList[index].classList.remove(activeClass);
+    }
+  }
+
+  function addActiveLiElemment(elem, parent) {
+    if (!elem || elem === parent) {
+      return;
+    } else {
+      if (elem.__proto__ === HTMLLIElement.prototype) {
+        elem.classList.add(active);
+      }
+      addActiveLiElemment(elem.parentElement, parent);
+    }
+  }
+
+  function showToc() {
+    if (tocWrapper) {
+      postBody = document.querySelector('#post_body');
+      for (let i = 0; i < postBody.children.length; i++) {
+        if (postBody.children[i].__proto__ === HTMLHeadingElement.prototype) {
+          hList.push(postBody.children[i]);
+        }
+      }
+      if (tocWrapper.classList.contains('compress')) {
+        tocContent.classList.add('closed');
+      } else if (tocWrapper.classList.contains('no_compress')) {
+        tocContent.classList.add('expanded');
+      } else {
+        if (hList.length > 10) {
+          active = 'active-hidden'
+          tocContent.classList.add('closed');
+        } else {
+          tocContent.classList.add('expanded');
+        }
+      }
+    }
+  }
+
+  (function () {
+    // 处理不是从#一级标题开始目录
+    if (tocContent.children.length === 1 && tocContent.children[0].__proto__ === HTMLLIElement.prototype) {
+      let con = tocContent.children[0].children[0];
+      tocContent.innerHTML = con.innerHTML;
+    }
+    let markdownItTOC = document.querySelector('.markdownIt-TOC');
+    let innerHeight = window.innerHeight;
+    markdownItTOC.style = `max-height: ${innerHeight - 80 > 0 ? innerHeight - 80 : innerHeight}px`
+    addTocNumber(tocContent, '');
+  })();
+
+  document.addEventListener('scroll', function (e) {
+    if (lList.length <= 0) {
+      return;
+    }
+    let scrollTop = document.scrollingElement.scrollTop + 10;
+    let dir;
+
+    if (lastTop - scrollTop > 0) {
+      dir = 'up';
+    } else {
+      dir = 'down';
+    }
+
+    lastTop = scrollTop;
+    if (scrollTop <= 0) {
+      if (lastIndex >= 0 && lastIndex < hList.length) {
+        lList[lastIndex].classList.remove(activeClass);
+      }
+      return;
+    }
+
+    let current = 0, hasFind = false;
+    for (let i = 0; i < hList.length; i++) {
+      if (hList[i].offsetTop > scrollTop) {
+        current = i;
+        hasFind = true;
+        break;
+      }
+    }
+    if (!hasFind && scrollTop > lList[lList.length - 1].offsetTop) {
+      current = hList.length - 1;
+    } else {
+      current--;
+    }
+    if (dir === 'down') {
+      if (current > lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex)
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    } else {
+      if (current < lastIndex) {
+        addActiveClass(current);
+        removeActiveClass(lastIndex);
+        lastIndex = current;
+        removeParentActiveClass();
+        lList[current] && addActiveLiElemment(lList[current].parentElement, tocContent);
+      }
+    }
+  });
+
+
+  window.addEventListener('load', function () {
+    showToc();
+    document.querySelector('#sidebar').style = 'display: block;';
+    tocWrapper.classList.add('toc-active');
+    setTimeout(function () {
+      if ("createEvent" in document) {
+        let evt = document.createEvent("HTMLEvents");
+        evt.initEvent("scroll", false, true);
+        document.dispatchEvent(evt);
+      }
+      else {
+        document.fireEvent("scroll");
+      }
+    }, 500)
+  })
+
+</script>
+            </div>
           
-            <img src="/post-images/nestjs-hou-duan-kai-fa-pei-zhi.jpg" />
-          
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn language" data-lan="read-more" href="https://Orime112.github.io/post/nestjs-hou-duan-kai-fa-pei-zhi/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
         
       </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
     </div>
-  </article>
+  
+</div>
+<script>
+  const SIDEBAR_TITLE_ACTIVE = 'sidebar-title-active';
+  const SIDEBAR_BODY_ACTIVE = 'sidebar-body-active';
+  const SLIDE_UP_IN = 'slide-up-in';
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
+  let sidebar = document.querySelector('#sidebar'),
+  tocSideBar = document.querySelector('#tocSideBar'),
+  metaSideBar = document.querySelector('#metaSideBar'),
+  postToc = document.querySelector('#post_toc'),
+  postSiteMeta = document.querySelector('#post_side_meta'),
+  sidebarTitle = document.querySelector('.sidebar-title'),
+  sidebarBody = document.querySelector('#sidebar_body');
+
+  tocSideBar && tocSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  metaSideBar && metaSideBar.addEventListener('click', (e) => {
+    toggleSidebar(e);
+  });
+
+  function toggleSidebar(e) {
+    let currentTitle = document.querySelector("."+SIDEBAR_TITLE_ACTIVE);
+    if (currentTitle == e.srcElement) {
+      return ;
+    }
+    let current, showElement, hideElement;
+    if (e.srcElement == metaSideBar) {
+      showElement = postSiteMeta;
+      hideElement = postToc;
+    } else if (e.srcElement == tocSideBar){
+      showElement = postToc;
+      hideElement = postSiteMeta;
+    }
+    currentTitle.classList.remove(SIDEBAR_TITLE_ACTIVE);
+    e.srcElement.classList.add(SIDEBAR_TITLE_ACTIVE);
+
+    window.Velocity(hideElement, 'stop');
+    window.Velocity(hideElement, 'transition.slideUpOut', {
+      display: 'none',
+      duration: 200,
+      complete: function () {
+        window.Velocity(showElement, 'transition.slideDownIn', {
+          duration: 200
+        });
+      }
+    })
+    hideElement.classList.remove(SIDEBAR_BODY_ACTIVE);
+    showElement.classList.add(SIDEBAR_BODY_ACTIVE);
+  }
+
+  postToc && postToc.addEventListener('transitionend', function() {
+    this.classList.remove(SLIDE_UP_IN);
+  });
+
+  if (sidebarBody) {
+    if (sidebarBody.classList.contains('pisces') || sidebarBody.classList.contains('gemini')) {
+      let hasFix = false;
+      let scrollEl = document.querySelector('.main-continer');
+      let limitTop = document.querySelector('#nav_ul').children.length * 42 + 162;
+      window.addEventListener('scroll', function(e) {
+        if (document.scrollingElement.scrollTop >= limitTop) {
+          if (!hasFix) {
+            sidebar.classList.add('sidebar-fixed');
+            hasFix = true;
+          }
+        } else {
+          if (hasFix) {
+            sidebar.classList.remove('sidebar-fixed');
+            hasFix = false;
+          }
+        }
+      });
+    }
+  }
+  
+</script>
+        <div class="section-box box-shadow-wrapper">
+          <div class="section bg-color post post-page">
+            <header class="post-header">
   <h1 class="post-title">
     <a class="post-title-link" href="https://Orime112.github.io/post/mianshi/">
       常见面试题总结（四）Css骚操作、图片懒加载，手写promise等
@@ -355,116 +557,326 @@
     
   </div>
 </header>
-      <div class="post-body">
-        
-        
-          
-            <img src="/post-images/mianshi.jpg" />
-          
-          
-        
-        
-        <div class="post-button text-center">
-          <a class="btn language" data-lan="read-more" href="https://Orime112.github.io/post/mianshi/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
-      
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
-      
-    </div>
-  </article>
+            <div class="post-body next-md-body" id="post_body">
+              <p>🕶☂️🌂😊🤓🥙🥒🚣‍♀🎏🗽<br>
+<a name="mcuT8"></a></p>
+<h1 id="1-css实现一个扇形">1、Css实现一个扇形</h1>
+<ul>
+<li>思路：提示一下思路，width和height都设置为0<br>
+，border宽度设置为一个固定值，border角度设置和宽度一致，然后上下左右四个反向border-color，设置一个方向的颜色和另外方向的不同即可</li>
+</ul>
+<pre><code class="language-html">&lt;view class=&quot;shan&quot;&gt;&lt;/view&gt;
+  
+&lt;style lang=&quot;scss&quot;&gt;
+  .shan{
+  	width: 0px;
+    height: 0px;
+    border-width: 50px;
+    border-radius: 50px;
+    border-color: brow transparent transparent;
+  }
+&lt;/style&gt;
+</code></pre>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/513194/1592365774236-6363bc10-fdfd-4315-b3d0-51b595b05e1c.png#align=left&amp;display=inline&amp;height=109&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=109&amp;originWidth=108&amp;size=1370&amp;status=done&amp;style=none&amp;width=108" alt="image.png" loading="lazy"><br /></p>
+<p><a name="CGCi1"></a></p>
+<h1 id="2-css-中transition和animate有何区别animate如何停留在最后一帧">2、CSS 中<code>transition</code>和<code>animate</code>有何区别?<code>animate</code>如何停留在最后一帧!</h1>
+<hr>
+<ul>
+<li>顾名思义，  是用来做过渡的，没有时间轴的概念，通过事件触发）（只有一次），没有中间状态。</li>
+<li>animate是做动效的，有时间轴的概念，可以重复触发并且拥有中间状态</li>
+</ul>
+<p><br />过渡的开销比动效小,前者一般用于交互居多,后者用于活动页居多;<br />至于如何让<code>animate</code>停留在最后一帧也好办,就它自身参数的一个值就可以了</p>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot;&gt;
+&lt;head&gt;
+  &lt;meta charset=&quot;UTF-8&quot;&gt;
+  &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+  &lt;title&gt;animate动画测试&lt;/title&gt;
+  &lt;style&gt;
+    .test {
+      box-sizing: border-box;
+      border: 5px solid #f00;
+      padding: 5px;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      /* 
+      animation属性的简写姿势排序
+      animation：名持方延，循方状尾
+      animation: name duration timing-function delay iteration-count direction fill-mode;
 
-  <article class="post-list-box  post box-shadow-wrapper">
-    <div class="article-wrapper bg-color">
-      <header class="post-header">
-  <h1 class="post-title">
-    <a class="post-title-link" href="https://Orime112.github.io/post/hello-gridea/">
-      Hello Gridea
-    </a>
-  </h1>
-  <div class="post-meta">
+      @keyframes name 动画名
+      duration 持续时间
+      timing-function 动画频率
+      delay 延迟多久开始
+      iteration-count 循环次数
+      direction 动画方向，往返还是正向
+      fill-mode 一般用来处理停留在某一帧 backwards则停留在首帧,both是轮流
+      play-state running 开始， pause 暂停。。。
+      */
+     animation: moveChangeColor 1s ease 2.5s infinite ;
+    }
+
+    @keyframes moveChangeColor {
+      from {
+        top: 0%;
+        left: 5%;
+        background-color: #f00;
+      }
+      to {
+        top: 0%;
+        left: 50%;
+        background-color: #ced;
+      }
+    }
+
+  &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div class=&quot;test&quot;&gt;&lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/513194/1592366673486-8a1580ba-2e9a-468d-9762-29091861f52b.png#align=left&amp;display=inline&amp;height=136&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=136&amp;originWidth=670&amp;size=4426&amp;status=done&amp;style=none&amp;width=670" alt="image.png" loading="lazy"><br>
+<a name="HY7Q2"></a></p>
+<h1 id="3-js实现stringtrim方法">3、JS实现String.trim()方法</h1>
+<ul>
+<li>trim本质就是在字符串的前后去掉空格</li>
+</ul>
+<pre><code class="language-html">String.prototype.emuTrim = function() {
+	return this.replace(/(^\s*)|(\s*$\)/g, '')
+}
+</code></pre>
+<p><a name="gUlnN"></a></p>
+<h1 id="4-virtual-dom-的优势在哪里">4、Virtual Dom 的优势在哪里？</h1>
+<p>:::info<br>
+「Virtual Dom 的优势」其实这道题目面试官更想听到的答案不是上来就说「直接操作/频繁操作 DOM 的性能差」，如果 DOM 操作的性能如此不堪，那么 jQuery 也不至于活到今天。所以面试官更想听到 VDOM 想解决的问题以及为什么频繁的 DOM 操作会性能差。<br />首先我们需要知道：<br />DOM 引擎、JS 引擎 相互独立，但又工作在同一线程（主线程） JS 代码调用 DOM API 必须 挂起 JS 引擎、转换传入参数数据、激活 DOM 引擎，DOM 重绘后再转换可能有的返回值，最后激活 JS 引擎并继续执行若有频繁的 DOM API 调用，且浏览器厂商不做“批量处理”优化， 引擎间切换的单位代价将迅速积累若其中有强制重绘的 DOM API 调用，重新计算布局、重新绘制图像会引起更大的性能消耗。<br>
+:::<br>
+:::info<br>
+其次是 VDOM 和真实 DOM 的区别和优化：<br>
+:::<br>
+:::info</p>
+<ol>
+<li>虚拟 DOM 不会立马进行排版与重绘操作<br /></li>
+<li>虚拟 DOM 进行频繁修改，然后一次性比较并修改真实 DOM 中需要改的部分，最后在真实 DOM 中进行排版与重绘，减少过多DOM节点排版与重绘损耗<br /></li>
+<li>虚拟 DOM 有效降低大面积真实 DOM 的重绘与排版，因为最终与真实 DOM 比较差异，可以只渲染局部<br /><br>
+:::</li>
+</ol>
+<p><a name="lWoYX"></a></p>
+<h1 id="5-js实现图片懒加载">5、JS实现图片懒加载</h1>
+<p>有时候一个网页会包含很多的图片，例如淘宝京东这些购物网站，商品图片多只之又多，页面图片多，加载的图片就多。服务器压力就会很大。不仅影响渲染速度还会浪费带宽。比如一个1M大小的图片，并发情况下，达到1000并发，即同时有1000个人访问，就会产生1个G的带宽。<br />为了解决以上问题，提高用户体验，就出现了懒加载方式来减轻服务器的压力，优先加载可视区域的内容，其他部分等进入了可视区域再加载，从而提高性能。<br />vue项目中的打包，是把html、css、js进行打包，还有图片压缩。但是打包时把css和js都分成了几部分，这样就不至于一个css和就是文件非常大。也是优化性能的一种方式。<br />效果动图如下：<br />进入正题------懒加载<br />1.懒加载原理<br />一张图片就是一个<img>标签，浏览器是否发起请求图片是根据<img>的src属性，所以实现懒加载的关键就是，在图片没有进入可视区域时，先不给<img>的src赋值，这样浏览器就不会发送请求了，等到图片进入可视区域再给src赋值。<br />2.懒加载思路及实现<br />实现懒加载有四个步骤，如下：<br />1.加载loading图片<br />2.判断哪些图片要加载【重点】<br />3.隐形加载图片<br />4.替换真图片<br />1.加载loading图片是在html部分就实现的，代码如下：<br />2.如何判断图片进入可视区域是关键。<br />引用网友的一张图，可以很清楚的看出可视区域。<br />如上图所示，让在浏览器可视区域的图片显示，可视区域外的不显示，所以当图片距离顶部的距离top-height等于可视区域h和滚动区域高度s之和时说明图片马上就要进入可视区了，就是说当top-height&lt;=s+h时，图片在可视区。<br />这里介绍下几个API函数：<br />页可见区域宽：document.body.clientWidth;<br />网页可见区域高：document.body.clientHeight;<br />网页可见区域宽：document.body.offsetWidth (包括边线的宽);<br />网页可见区域高：document.body.offsetHeight (包括边线的宽);<br />网页正文全文宽：document.body.scrollWidth;<br />网页正文全文高：document.body.scrollHeight;<br />网页被卷去的高：document.body.scrollTop;<br />网页被卷去的左：document.body.scrollLeft;<br />网页正文部分上：window.screenTop;<br />网页正文部分左：window.screenLeft;<br />屏幕分辨率的高：window.screen.height;<br />屏幕分辨率的宽：window.screen.width;<br />屏幕可用工作区高度：window.screen.availHeight;<br />HTMLElement.offsetTop 为只读属性，它返回当前元素相对于其 offsetParent 元素的顶部的距离。<br />window.innerHeight：浏览器窗口的视口（viewport）高度（以像素为单位）；如果有水平滚动条，也包括滚动条高度。<br />具体实现的js代码为：<br /><img src="https://cdn.nlark.com/yuque/0/2020/png/513194/1592367450299-42f2feba-7781-4c7d-91b0-499480166dcf.png#align=left&amp;display=inline&amp;height=174&amp;margin=%5Bobject%20Object%5D&amp;originHeight=800&amp;originWidth=642&amp;size=0&amp;status=done&amp;style=none&amp;width=140" alt="" loading="lazy"><br />效果如下：<br /><img src="https://cdn.nlark.com/yuque/0/2020/png/513194/1592367450323-9a1269a2-3e5f-48a7-b678-290fece360bf.png#align=left&amp;display=inline&amp;height=82&amp;margin=%5Bobject%20Object%5D&amp;originHeight=466&amp;originWidth=800&amp;size=0&amp;status=done&amp;style=none&amp;width=140" alt="" loading="lazy"><br />随着鼠标向下滚动，其余图片也逐渐显示并发起请求。<br /><img src="https://cdn.nlark.com/yuque/0/2020/png/513194/1592367450272-16c3e75c-99d2-4843-982a-9151c7822163.png#align=left&amp;display=inline&amp;height=70&amp;margin=%5Bobject%20Object%5D&amp;originHeight=399&amp;originWidth=800&amp;size=0&amp;status=done&amp;style=none&amp;width=140" alt="" loading="lazy"></p>
+<p><a name="3vGI2"></a></p>
+<h1 id="6-给定一个整数数组找出具有最大和的子数组返回最大和">6、给定一个整数数组，找出具有最大和的子数组，返回最大和</h1>
+<pre><code class="language-javascript">/**
+ * 给定一个整数数组
+ * 找出具有最大和的连续子数组
+ * 返回最大和
+ */
+console.log('进入了js文件');
+
+
+const arr = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+
+function maxSum(arr) {
+
+  let sum = 0
+  let max = 0
+
+  for (let i = 0, len = arr.length; i &lt; len; i++) {
+    // 数组中的每一项在此遍历
+    // 从1到最后依次累加
+    // arr[i]依次为 -2, 1, -3, 4
+    sum += arr[i]
+    console.log(sum, i, arr[i]);
     
-    <span class="meta-item pc-show">
-      <i class="fa fa-calendar-o"></i>
-      <span class="language" data-lan="publish">发布于</span>
-      <span>2018-12-12</span>
-      <span class="post-meta-divider pc-show">|</span>
-    </span>
+    if (max &lt; sum) {
+      // 最大值默认为0，如果最大值比现有和小了，让最大值等于现有和
+      max = sum
+    }
+    if (sum &lt; 0) {
+      // 如果sum的值为负了，说明前面的累加并非最佳方案，放弃前面，去后面寻找，让sum值重新为0
+      sum = 0
+    }
+  }
+  return max
+}
+
+console.log(maxSum([1, -2, 3, -4, -5]));
+</code></pre>
+<p><a name="BHwJJ"></a></p>
+<h1 id="7-实现一个基本的promise">7、实现一个基本的promise</h1>
+<hr>
+<ul>
+<li>分析：一个基本的promise，是一个类，实例化的时候接收一个回调函数，这个函数中有两个参数分别为resolve和reject</li>
+<li>用法：需要考虑到会在异步函数中进行resolve方法，所以需要管理成功态回调函数数组和失败态回调函数数组</li>
+</ul>
+<pre><code class="language-javascript">const promise = new Promise((resolve, reject) =&gt; {
+	setTimeout(() =&gt; {
+  	resolve('ok')
+  }, 1000)
+})
+</code></pre>
+<pre><code class="language-javascript">class MyPromise {
+  constructor(fn) {
+    this.status = 'pending'
+    this.value = undefined
+    this.reason = undefined
+
+    // 保存异步执行过程中的回调函数数组
+    this.resolvedCallbacks = []
+    this.rejectedCallbacks = []
+
+    let resolve = value =&gt; {
+      if(this.status === 'pending') {
+        this.status = 'fulfilled'
+        this.value = value
+        this.resolvedCallbacks.map(cb =&gt; cb(this.value))
+      }
+    }
+
+    let reject = reason =&gt; {
+      if(this.status === 'pending') {
+        this.staus = 'rejected'
+        this.reason = reason
+        this.rejectedCallbacks.map(cb =&gt; cb(this.reason))
+      }
+    }
     
-    <span class="meta-item">
-      <i class="fa fa-folder-o"></i>
-      <span class="pc-show language" data-lan="category-in">分类于</span>
-      
-      
-      <a href="https://Orime112.github.io/tag/qr9gLQYaG/">
-        <span>Gridea</span>
-      </a>
-      
-      
-    </span>
-    <span class="post-meta-divider">|</span>
+    try {
+      fn(resolve, reject)
+    } catch (err) {
+      reject(err)
+    }
+  }
+
+  // then方法实现
+  then(onFulfilled, onRejected) {
+    if(this.status === 'pending') {
+      this.resolvedCallbacks.push(onFulfilled)
+      this.rejectedCallbacks.push(onRejected)
+    }
+    if(this.status === 'fulfilled') {
+      onFulfilled(this.value)
+    }
+    if(this.status === 'rejected') {
+      onRejected(this.reason)
+    }
+  }
+}
+
+const myPromise = new MyPromise((res, rej) =&gt; {
+  setTimeout(() =&gt; {
+    res('ok123')
+  }, 500)
+}).then(value =&gt; {
+  console.log(value);
+  
+}, reason =&gt; {
+  console.log(reason);
+})
+
+
+</code></pre>
+<p><img src="https://cdn.nlark.com/yuque/0/2020/png/513194/1593237993358-25c33b75-d833-4f5a-a722-30041eec8ea9.png#align=left&amp;display=inline&amp;height=114&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=114&amp;originWidth=422&amp;size=37886&amp;status=done&amp;style=none&amp;width=422" alt="image.png" loading="lazy"><br /><img src="https://cdn.nlark.com/yuque/0/2020/png/513194/1593238548031-b15bfb5f-13df-4bfa-a711-88ea1d018e7f.png#align=left&amp;display=inline&amp;height=244&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=244&amp;originWidth=425&amp;size=113891&amp;status=done&amp;style=none&amp;width=425" alt="image.png" loading="lazy"><br /><img src="https://cdn.nlark.com/yuque/0/2020/png/513194/1593238617376-45f51fef-ccbe-4528-9e96-c02dcfb9e654.png#align=left&amp;display=inline&amp;height=582&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=582&amp;originWidth=576&amp;size=302789&amp;status=done&amp;style=none&amp;width=576" alt="image.png" loading="lazy"></p>
+<ul>
+<li>实例化过程中用到异步本身，需要setTimeout</li>
+</ul>
+<figure data-type="image" tabindex="1"><img src="https://cdn.nlark.com/yuque/0/2020/png/513194/1593241163054-c00c45ff-b59e-4a42-bb7a-a4be274e2963.png#align=left&amp;display=inline&amp;height=567&amp;margin=%5Bobject%20Object%5D&amp;name=image.png&amp;originHeight=567&amp;originWidth=602&amp;size=334364&amp;status=done&amp;style=none&amp;width=602" alt="image.png" loading="lazy"></figure>
+
+            </div>
+            
+            
+              <div class="post-footer">
+  <ul class="post-copyright">
+    <li class="post-copyright-author">
+      <strong class="language" data-lan="author">本文作者：</strong>
+      适用 Gemini,Pisces 布局,版权说明需配置
+    </li>
+    <li class="post-copyright-link">
+      <strong class="language" data-lan="link">本文链接：</strong>
+      <a href="https://Orime112.github.io/post/mianshi/" title="常见面试题总结（四）Css骚操作、图片懒加载，手写promise等">https://Orime112.github.io/post/mianshi/</a>
+    </li>
+    <li class="post-copyright-license">
+      <strong class="language" data-lan="copyright">版权声明： </strong>
+      本博客所有文章除特别声明外，均采用<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i> BY-NC-SA</a> 许可协议。转载请注明出处！
+    </li>
+  </ul>
+  <div class="tags">
     
-    <span class="meta-item">
-      <i class="fa fa-clock-o"></i>
-      <span>2<span class="language" data-lan="minute">分钟</span></span>
-    </span>
-    <span class="meta-item">
-      <span class="post-meta-divider">|</span>
-      <i class="fa fa-file-word-o"></i>
-      <span>298<span class="pc-show language" data-lan="words">字数</span></span>
-    </span>
+      <a href="https://Orime112.github.io/tag/-Fd3HRqbK/"># react</a>
+    
+      <a href="https://Orime112.github.io/tag/Qe5laxC0U/"># 思考</a>
     
   </div>
-</header>
-      <div class="post-body">
-        
-        
-          
-            <img src="/post-images/hello-gridea.png" />
-          
-          <p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
-
-        
-        
-        <div class="post-button text-center">
-          <a class="btn language" data-lan="read-more" href="https://Orime112.github.io/post/hello-gridea/" rel="contents">
-            阅读全文 »
-          </a>
-        </div>
-        
-      </div>
+  <div class="nav">
+    <div class="nav-prev">
       
-        <footer class="post-footer">
-          <div class="post-eof"></div>
-        </footer>
+        <i class="fa fa-chevron-left"></i>
+        <a class="nav-pc-next" title="nest.js后端开发配置" href="https://Orime112.github.io/post/nestjs-hou-duan-kai-fa-pei-zhi/">nest.js后端开发配置</a class="nav-pc-next">
+        <a class="nav-mobile-prev" title="nest.js后端开发配置" href="https://Orime112.github.io/post/nestjs-hou-duan-kai-fa-pei-zhi/">上一篇</a>
       
     </div>
-  </article>
-  
-            
-            
-<div class="page bg-color">
-  <ul class="pagination-ul">
-    
-    
+    <div class="nav-next">
       
-        <li class="pagination-li pagination-active">
-            <a href="/page/../">
-              1
-            </a>
-        </li>
+        <a class="nav-pc-next" title="Hello Gridea" href="https://Orime112.github.io/post/hello-gridea/">Hello Gridea</a>
+        <a class="nav-mobile-next" title="Hello Gridea" href="https://Orime112.github.io/post/hello-gridea/">下一篇</a>
+        <i class="fa fa-chevron-right"></i>
       
-    
-    
-  </ul>
+    </div>
+  </div>
 </div>
-          </section>
+            
+            
+  <script src="https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js"></script>
+<div id="vcomments" style="padding: 10px 0px 0px 0px"></div>
+
+<style>
+  .v .veditor {
+    min-height: 10rem;
+    background-image: url('');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-color: rgba(255, 255, 255, 0);
+    resize: none;
+  }
+
+  .v .vwrap {
+    border: 1px solid #000 !important;
+  }
+
+  .v .vbtn {
+    padding: .4rem 1.2rem !important;
+    border-color: #fff !important;
+    background-color: #49b1f5 !important;
+    color: #fff !important;
+    font-size: .7rem !important;
+  }
+
+  .v .vcards .vcard .vh .vmeta .vat {
+    padding: 0 .8rem !important;
+    border: 1px solid #00c4b6 !important;
+    border-radius: 5px !important;
+    color: #00c4b6 !important;
+  }
+</style>
+<script>
+  new Valine({
+    el: '#vcomments',
+    appId: 'ToyKfsmIIWLY7xIqjSJJJ7gT-gzGzoHsz',
+    appKey: '4nf2jrkhjN7Ja3zbX2Ees1cf',
+    avatar: '',
+    placeholder: '',
+    pageSize: '',
+    lang: 'zh-cn',
+    enableQQ: 'true' === 'false',
+    visitor: 'true' === 'false',
+    highlight: 'true' === 'true',
+    avatarForce: 'true' === 'false',
+  });
+</script>
+
+          </div>
         </div>
       </div>
     </div>
@@ -1238,6 +1650,223 @@
     }
   })
 </script>
+    <div class="reward-mask" style="display: none;">
+  <div class="reward-relative">
+    <span class="close" aria-hidden="true">x</span>
+    <div class="reward-body">
+      <h2>感谢您的支持，我会继续努力的!</h2>
+      <div class="reward-img-box">
+        <div style="position: relative; width: 140px; height: 140px;">
+          
+          
+          
+        </div>
+      </div>
+      <p class="reward-word">扫码打赏，你说多少就多少</p>
+      <p class="reward-tip">打开微信扫一扫，即可进行扫码打赏哦</p>
+    </div>
+    <div class="bottom">
+      
+      
+    </div>
+  </div>
+</div>
+<style>
+  .reward-mask {
+    position: fixed;
+    z-index: 99999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #00000054;
+  }
+
+  .reward-relative {
+    position: relative;
+    width: 480px;
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 5px;
+    background-color: #fff;
+    top: 50%;
+    margin-top: -205px;
+  }
+
+  .reward-relative .close {
+    position: absolute;
+    right: 10px;
+    font-weight: normal;
+    font-size: 16px;
+    color: #929292;
+  }
+
+  .reward-body {
+    padding: 40px 20px 20px;
+  }
+
+  .bottom {
+    display: flex;
+  }
+
+  .reward-btn {
+    text-align: center;
+  }
+
+  .reward-btn-text {
+    display: inline-block;
+    cursor: pointer;
+    width: 60px;
+    height: 60px;
+    line-height: 60px;
+    border-radius: 50%;
+    background-color: #ff9734;
+    color: #FFF;
+    margin-top: 20px;
+  }
+
+  .pay-text {
+    margin-top: 10px;
+    padding: 10px;
+    flex: 1;
+    transition: all .2s linear;
+  }
+
+  .pay-text:hover {
+    background-color: #a5a5a536;
+  }
+
+  .reward-body h2 {
+    padding-top: 10px;
+    text-align: center;
+    color: #a3a3a3;
+    font-size: 16px;
+    font-weight: normal;
+    margin: 0 0 20px;
+  }
+
+  .reward-body h2:after,
+  .reward-body h2:before {
+    font-family: Arial, Helvetica, sans-serif;
+    background: 0 0;
+    width: 0;
+    height: 0;
+    font-style: normal;
+    color: #eee;
+    font-size: 80px;
+    position: absolute;
+    top: 20px;
+  }
+
+  .reward-body h2:before {
+    content: '\201c';
+    left: 50px;
+  }
+
+  .reward-body h2:after {
+    content: '\201d';
+    right: 80px;
+  }
+
+  .reward-img-box {
+    display: inline-block;
+    padding: 10px;
+    border: 6px solid #ea5f00;
+    margin: 0 auto;
+    border-radius: 3px;
+    position: relative;
+  }
+
+  .reward-img {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media (max-width: 767px) {
+    .reward-relative {
+      height: 100%;
+      top: 0px;
+      margin-top: 0;
+      width: auto;
+    }
+
+    .reward-relative .bottom {
+      flex-direction: column;
+    }
+
+    .reward-relative .pay-text {
+      width: 80%;
+      margin: 5px auto;
+      border: 1px solid silver;
+      padding: 6px;
+      border-radius: 4px;
+    }
+
+    .reward-body h2:after {
+      right: 40px;
+    }
+
+    .reward-body h2:after,
+    .reward-body h2:before {
+      font-size: 60px;
+    }
+
+    .reward-body h2:before {
+      left: 20px;
+    }
+  }
+</style>
+<script>
+  !function () {
+    var mask = document.querySelector('.reward-mask');
+    let close = document.querySelector('.reward-relative .close');
+    let rewardBtn = document.querySelector('.reward-btn');
+
+    let zfb = document.querySelector('#zfb'),
+      wx = document.querySelector('#wx'),
+      zfbBtn = document.querySelector('#zfbBtn'),
+      wxBtn = document.querySelector('#wxBtn');
+
+    if (zfbBtn && wxBtn) {
+      zfbBtn.addEventListener('click', () => {
+        window.Velocity(zfb, 'transition.slideLeftIn', {
+          duration: 400
+        });
+        window.Velocity(wx, 'transition.slideRightOut', {
+          display: 'none',
+          duration: 400
+        });
+      });
+
+      wxBtn.addEventListener('click', () => {
+        window.Velocity(wx, 'transition.slideRightIn', {
+          duration: 400
+        });
+        window.Velocity(zfb, 'transition.slideLeftOut', {
+          display: 'none',
+          duration: 400
+        });
+      });
+    }
+
+    rewardBtn.addEventListener('click', (e) => {
+      window.Velocity(mask, 'transition.slideDownIn', {
+        duration: 400
+      })
+    });
+
+    close.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.Velocity(mask, 'transition.slideUpOut', {
+        duration: 400
+      })
+    })
+  }()
+</script>
+
   </div>
 </body>
 
@@ -1812,6 +2441,5 @@ const myPromise = new MyPromise((res, rej) =&amp;gt; {
 
 
 <script src="/media/js/cool.js"></script>
-
 
 </html>

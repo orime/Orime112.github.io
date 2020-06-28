@@ -9,7 +9,7 @@
 <meta name="description" content="温故而知新">
 <meta name="theme-color" content="#000">
 <title>个人小站</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1592901929618">
+<link rel="shortcut icon" href="/favicon.ico?v=1593322902387">
 <link rel="stylesheet" href="/media/css/mist.css">
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link
@@ -200,13 +200,13 @@
     </div>
     <div class="sidebar-item-box">
       <a href="">
-        <span class="site-item-stat-count">2</span>
+        <span class="site-item-stat-count">4</span>
         <span class="site-item-stat-name language" data-lan="category">分类</span>
       </a>
     </div>
     <div class="sidebar-item-box">
       <a href="/tags/">
-        <span class="site-item-stat-count">2</span>
+        <span class="site-item-stat-count">4</span>
         <span class="site-item-stat-name language" data-lan="tag">标签</span>
       </a>
     </div>
@@ -1089,14 +1089,232 @@ nest g s user api
       </div>
       
       <div class="item">
-        <a class="result-title" style="opacity: 0;" href="https://Orime112.github.io/post/xin-jian-wen-zhang-a/"" data-c="
-          &lt;h2 id=&#34;markdown的支持非常棒了&#34;&gt;Markdown的支持非常棒了&lt;/h2&gt;
-&lt;pre&gt;&lt;code&gt;function app(a, b) {
-    console.log(a+b)
+        <a class="result-title" style="opacity: 0;" href="https://Orime112.github.io/post/mianshi/"" data-c="
+          &lt;p&gt;🕶☂️🌂😊🤓🥙🥒🚣‍♀🎏🗽&lt;br&gt;
+&lt;a name=&#34;mcuT8&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;1-css实现一个扇形&#34;&gt;1、Css实现一个扇形&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;思路：提示一下思路，width和height都设置为0&lt;br&gt;
+，border宽度设置为一个固定值，border角度设置和宽度一致，然后上下左右四个反向border-color，设置一个方向的颜色和另外方向的不同即可&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;view class=&amp;quot;shan&amp;quot;&amp;gt;&amp;lt;/view&amp;gt;
+  
+&amp;lt;style lang=&amp;quot;scss&amp;quot;&amp;gt;
+  .shan{
+  	width: 0px;
+    height: 0px;
+    border-width: 50px;
+    border-radius: 50px;
+    border-color: brow transparent transparent;
+  }
+&amp;lt;/style&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://cdn.nlark.com/yuque/0/2020/png/513194/1592365774236-6363bc10-fdfd-4315-b3d0-51b595b05e1c.png#align=left&amp;amp;display=inline&amp;amp;height=109&amp;amp;margin=%5Bobject%20Object%5D&amp;amp;name=image.png&amp;amp;originHeight=109&amp;amp;originWidth=108&amp;amp;size=1370&amp;amp;status=done&amp;amp;style=none&amp;amp;width=108&#34; alt=&#34;image.png&#34; loading=&#34;lazy&#34;&gt;&lt;br /&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;CGCi1&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;2-css-中transition和animate有何区别animate如何停留在最后一帧&#34;&gt;2、CSS 中&lt;code&gt;transition&lt;/code&gt;和&lt;code&gt;animate&lt;/code&gt;有何区别?&lt;code&gt;animate&lt;/code&gt;如何停留在最后一帧!&lt;/h1&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;顾名思义，  是用来做过渡的，没有时间轴的概念，通过事件触发）（只有一次），没有中间状态。&lt;/li&gt;
+&lt;li&gt;animate是做动效的，有时间轴的概念，可以重复触发并且拥有中间状态&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;br /&gt;过渡的开销比动效小,前者一般用于交互居多,后者用于活动页居多;&lt;br /&gt;至于如何让&lt;code&gt;animate&lt;/code&gt;停留在最后一帧也好办,就它自身参数的一个值就可以了&lt;/p&gt;
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;!DOCTYPE html&amp;gt;
+&amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;
+&amp;lt;head&amp;gt;
+  &amp;lt;meta charset=&amp;quot;UTF-8&amp;quot;&amp;gt;
+  &amp;lt;meta name=&amp;quot;viewport&amp;quot; content=&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&amp;gt;
+  &amp;lt;title&amp;gt;animate动画测试&amp;lt;/title&amp;gt;
+  &amp;lt;style&amp;gt;
+    .test {
+      box-sizing: border-box;
+      border: 5px solid #f00;
+      padding: 5px;
+      width: 100px;
+      height: 100px;
+      position: absolute;
+      /* 
+      animation属性的简写姿势排序
+      animation：名持方延，循方状尾
+      animation: name duration timing-function delay iteration-count direction fill-mode;
+
+      @keyframes name 动画名
+      duration 持续时间
+      timing-function 动画频率
+      delay 延迟多久开始
+      iteration-count 循环次数
+      direction 动画方向，往返还是正向
+      fill-mode 一般用来处理停留在某一帧 backwards则停留在首帧,both是轮流
+      play-state running 开始， pause 暂停。。。
+      */
+     animation: moveChangeColor 1s ease 2.5s infinite ;
+    }
+
+    @keyframes moveChangeColor {
+      from {
+        top: 0%;
+        left: 5%;
+        background-color: #f00;
+      }
+      to {
+        top: 0%;
+        left: 50%;
+        background-color: #ced;
+      }
+    }
+
+  &amp;lt;/style&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body&amp;gt;
+  &amp;lt;div class=&amp;quot;test&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;/body&amp;gt;
+&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://cdn.nlark.com/yuque/0/2020/png/513194/1592366673486-8a1580ba-2e9a-468d-9762-29091861f52b.png#align=left&amp;amp;display=inline&amp;amp;height=136&amp;amp;margin=%5Bobject%20Object%5D&amp;amp;name=image.png&amp;amp;originHeight=136&amp;amp;originWidth=670&amp;amp;size=4426&amp;amp;status=done&amp;amp;style=none&amp;amp;width=670&#34; alt=&#34;image.png&#34; loading=&#34;lazy&#34;&gt;&lt;br&gt;
+&lt;a name=&#34;HY7Q2&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;3-js实现stringtrim方法&#34;&gt;3、JS实现String.trim()方法&lt;/h1&gt;
+&lt;ul&gt;
+&lt;li&gt;trim本质就是在字符串的前后去掉空格&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;String.prototype.emuTrim = function() {
+	return this.replace(/(^\s*)|(\s*$\)/g, &#39;&#39;)
 }
 &lt;/code&gt;&lt;/pre&gt;
-&lt;p&gt;😎🌲🍃🍗🤸‍♀📅📆🕖&lt;/p&gt;
-">新建文章啊</a>
+&lt;p&gt;&lt;a name=&#34;gUlnN&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;4-virtual-dom-的优势在哪里&#34;&gt;4、Virtual Dom 的优势在哪里？&lt;/h1&gt;
+&lt;p&gt;:::info&lt;br&gt;
+「Virtual Dom 的优势」其实这道题目面试官更想听到的答案不是上来就说「直接操作/频繁操作 DOM 的性能差」，如果 DOM 操作的性能如此不堪，那么 jQuery 也不至于活到今天。所以面试官更想听到 VDOM 想解决的问题以及为什么频繁的 DOM 操作会性能差。&lt;br /&gt;首先我们需要知道：&lt;br /&gt;DOM 引擎、JS 引擎 相互独立，但又工作在同一线程（主线程） JS 代码调用 DOM API 必须 挂起 JS 引擎、转换传入参数数据、激活 DOM 引擎，DOM 重绘后再转换可能有的返回值，最后激活 JS 引擎并继续执行若有频繁的 DOM API 调用，且浏览器厂商不做“批量处理”优化， 引擎间切换的单位代价将迅速积累若其中有强制重绘的 DOM API 调用，重新计算布局、重新绘制图像会引起更大的性能消耗。&lt;br&gt;
+:::&lt;br&gt;
+:::info&lt;br&gt;
+其次是 VDOM 和真实 DOM 的区别和优化：&lt;br&gt;
+:::&lt;br&gt;
+:::info&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;虚拟 DOM 不会立马进行排版与重绘操作&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;虚拟 DOM 进行频繁修改，然后一次性比较并修改真实 DOM 中需要改的部分，最后在真实 DOM 中进行排版与重绘，减少过多DOM节点排版与重绘损耗&lt;br /&gt;&lt;/li&gt;
+&lt;li&gt;虚拟 DOM 有效降低大面积真实 DOM 的重绘与排版，因为最终与真实 DOM 比较差异，可以只渲染局部&lt;br /&gt;&lt;br&gt;
+:::&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;&lt;a name=&#34;lWoYX&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;5-js实现图片懒加载&#34;&gt;5、JS实现图片懒加载&lt;/h1&gt;
+&lt;p&gt;有时候一个网页会包含很多的图片，例如淘宝京东这些购物网站，商品图片多只之又多，页面图片多，加载的图片就多。服务器压力就会很大。不仅影响渲染速度还会浪费带宽。比如一个1M大小的图片，并发情况下，达到1000并发，即同时有1000个人访问，就会产生1个G的带宽。&lt;br /&gt;为了解决以上问题，提高用户体验，就出现了懒加载方式来减轻服务器的压力，优先加载可视区域的内容，其他部分等进入了可视区域再加载，从而提高性能。&lt;br /&gt;vue项目中的打包，是把html、css、js进行打包，还有图片压缩。但是打包时把css和js都分成了几部分，这样就不至于一个css和就是文件非常大。也是优化性能的一种方式。&lt;br /&gt;效果动图如下：&lt;br /&gt;进入正题------懒加载&lt;br /&gt;1.懒加载原理&lt;br /&gt;一张图片就是一个&lt;img&gt;标签，浏览器是否发起请求图片是根据&lt;img&gt;的src属性，所以实现懒加载的关键就是，在图片没有进入可视区域时，先不给&lt;img&gt;的src赋值，这样浏览器就不会发送请求了，等到图片进入可视区域再给src赋值。&lt;br /&gt;2.懒加载思路及实现&lt;br /&gt;实现懒加载有四个步骤，如下：&lt;br /&gt;1.加载loading图片&lt;br /&gt;2.判断哪些图片要加载【重点】&lt;br /&gt;3.隐形加载图片&lt;br /&gt;4.替换真图片&lt;br /&gt;1.加载loading图片是在html部分就实现的，代码如下：&lt;br /&gt;2.如何判断图片进入可视区域是关键。&lt;br /&gt;引用网友的一张图，可以很清楚的看出可视区域。&lt;br /&gt;如上图所示，让在浏览器可视区域的图片显示，可视区域外的不显示，所以当图片距离顶部的距离top-height等于可视区域h和滚动区域高度s之和时说明图片马上就要进入可视区了，就是说当top-height&amp;lt;=s+h时，图片在可视区。&lt;br /&gt;这里介绍下几个API函数：&lt;br /&gt;页可见区域宽：document.body.clientWidth;&lt;br /&gt;网页可见区域高：document.body.clientHeight;&lt;br /&gt;网页可见区域宽：document.body.offsetWidth (包括边线的宽);&lt;br /&gt;网页可见区域高：document.body.offsetHeight (包括边线的宽);&lt;br /&gt;网页正文全文宽：document.body.scrollWidth;&lt;br /&gt;网页正文全文高：document.body.scrollHeight;&lt;br /&gt;网页被卷去的高：document.body.scrollTop;&lt;br /&gt;网页被卷去的左：document.body.scrollLeft;&lt;br /&gt;网页正文部分上：window.screenTop;&lt;br /&gt;网页正文部分左：window.screenLeft;&lt;br /&gt;屏幕分辨率的高：window.screen.height;&lt;br /&gt;屏幕分辨率的宽：window.screen.width;&lt;br /&gt;屏幕可用工作区高度：window.screen.availHeight;&lt;br /&gt;HTMLElement.offsetTop 为只读属性，它返回当前元素相对于其 offsetParent 元素的顶部的距离。&lt;br /&gt;window.innerHeight：浏览器窗口的视口（viewport）高度（以像素为单位）；如果有水平滚动条，也包括滚动条高度。&lt;br /&gt;具体实现的js代码为：&lt;br /&gt;&lt;img src=&#34;https://cdn.nlark.com/yuque/0/2020/png/513194/1592367450299-42f2feba-7781-4c7d-91b0-499480166dcf.png#align=left&amp;amp;display=inline&amp;amp;height=174&amp;amp;margin=%5Bobject%20Object%5D&amp;amp;originHeight=800&amp;amp;originWidth=642&amp;amp;size=0&amp;amp;status=done&amp;amp;style=none&amp;amp;width=140&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br /&gt;效果如下：&lt;br /&gt;&lt;img src=&#34;https://cdn.nlark.com/yuque/0/2020/png/513194/1592367450323-9a1269a2-3e5f-48a7-b678-290fece360bf.png#align=left&amp;amp;display=inline&amp;amp;height=82&amp;amp;margin=%5Bobject%20Object%5D&amp;amp;originHeight=466&amp;amp;originWidth=800&amp;amp;size=0&amp;amp;status=done&amp;amp;style=none&amp;amp;width=140&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;br /&gt;随着鼠标向下滚动，其余图片也逐渐显示并发起请求。&lt;br /&gt;&lt;img src=&#34;https://cdn.nlark.com/yuque/0/2020/png/513194/1592367450272-16c3e75c-99d2-4843-982a-9151c7822163.png#align=left&amp;amp;display=inline&amp;amp;height=70&amp;amp;margin=%5Bobject%20Object%5D&amp;amp;originHeight=399&amp;amp;originWidth=800&amp;amp;size=0&amp;amp;status=done&amp;amp;style=none&amp;amp;width=140&#34; alt=&#34;&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;a name=&#34;3vGI2&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;6-给定一个整数数组找出具有最大和的子数组返回最大和&#34;&gt;6、给定一个整数数组，找出具有最大和的子数组，返回最大和&lt;/h1&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;/**
+ * 给定一个整数数组
+ * 找出具有最大和的连续子数组
+ * 返回最大和
+ */
+console.log(&#39;进入了js文件&#39;);
+
+
+const arr = [-2, 1, -3, 4, -1, 2, 1, -5, 4]
+
+function maxSum(arr) {
+
+  let sum = 0
+  let max = 0
+
+  for (let i = 0, len = arr.length; i &amp;lt; len; i++) {
+    // 数组中的每一项在此遍历
+    // 从1到最后依次累加
+    // arr[i]依次为 -2, 1, -3, 4
+    sum += arr[i]
+    console.log(sum, i, arr[i]);
+    
+    if (max &amp;lt; sum) {
+      // 最大值默认为0，如果最大值比现有和小了，让最大值等于现有和
+      max = sum
+    }
+    if (sum &amp;lt; 0) {
+      // 如果sum的值为负了，说明前面的累加并非最佳方案，放弃前面，去后面寻找，让sum值重新为0
+      sum = 0
+    }
+  }
+  return max
+}
+
+console.log(maxSum([1, -2, 3, -4, -5]));
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;a name=&#34;BHwJJ&#34;&gt;&lt;/a&gt;&lt;/p&gt;
+&lt;h1 id=&#34;7-实现一个基本的promise&#34;&gt;7、实现一个基本的promise&lt;/h1&gt;
+&lt;hr&gt;
+&lt;ul&gt;
+&lt;li&gt;分析：一个基本的promise，是一个类，实例化的时候接收一个回调函数，这个函数中有两个参数分别为resolve和reject&lt;/li&gt;
+&lt;li&gt;用法：需要考虑到会在异步函数中进行resolve方法，所以需要管理成功态回调函数数组和失败态回调函数数组&lt;/li&gt;
+&lt;/ul&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;const promise = new Promise((resolve, reject) =&amp;gt; {
+	setTimeout(() =&amp;gt; {
+  	resolve(&#39;ok&#39;)
+  }, 1000)
+})
+&lt;/code&gt;&lt;/pre&gt;
+&lt;pre&gt;&lt;code class=&#34;language-javascript&#34;&gt;class MyPromise {
+  constructor(fn) {
+    this.status = &#39;pending&#39;
+    this.value = undefined
+    this.reason = undefined
+
+    // 保存异步执行过程中的回调函数数组
+    this.resolvedCallbacks = []
+    this.rejectedCallbacks = []
+
+    let resolve = value =&amp;gt; {
+      if(this.status === &#39;pending&#39;) {
+        this.status = &#39;fulfilled&#39;
+        this.value = value
+        this.resolvedCallbacks.map(cb =&amp;gt; cb(this.value))
+      }
+    }
+
+    let reject = reason =&amp;gt; {
+      if(this.status === &#39;pending&#39;) {
+        this.staus = &#39;rejected&#39;
+        this.reason = reason
+        this.rejectedCallbacks.map(cb =&amp;gt; cb(this.reason))
+      }
+    }
+    
+    try {
+      fn(resolve, reject)
+    } catch (err) {
+      reject(err)
+    }
+  }
+
+  // then方法实现
+  then(onFulfilled, onRejected) {
+    if(this.status === &#39;pending&#39;) {
+      this.resolvedCallbacks.push(onFulfilled)
+      this.rejectedCallbacks.push(onRejected)
+    }
+    if(this.status === &#39;fulfilled&#39;) {
+      onFulfilled(this.value)
+    }
+    if(this.status === &#39;rejected&#39;) {
+      onRejected(this.reason)
+    }
+  }
+}
+
+const myPromise = new MyPromise((res, rej) =&amp;gt; {
+  setTimeout(() =&amp;gt; {
+    res(&#39;ok123&#39;)
+  }, 500)
+}).then(value =&amp;gt; {
+  console.log(value);
+  
+}, reason =&amp;gt; {
+  console.log(reason);
+})
+
+
+&lt;/code&gt;&lt;/pre&gt;
+&lt;p&gt;&lt;img src=&#34;https://cdn.nlark.com/yuque/0/2020/png/513194/1593237993358-25c33b75-d833-4f5a-a722-30041eec8ea9.png#align=left&amp;amp;display=inline&amp;amp;height=114&amp;amp;margin=%5Bobject%20Object%5D&amp;amp;name=image.png&amp;amp;originHeight=114&amp;amp;originWidth=422&amp;amp;size=37886&amp;amp;status=done&amp;amp;style=none&amp;amp;width=422&#34; alt=&#34;image.png&#34; loading=&#34;lazy&#34;&gt;&lt;br /&gt;&lt;img src=&#34;https://cdn.nlark.com/yuque/0/2020/png/513194/1593238548031-b15bfb5f-13df-4bfa-a711-88ea1d018e7f.png#align=left&amp;amp;display=inline&amp;amp;height=244&amp;amp;margin=%5Bobject%20Object%5D&amp;amp;name=image.png&amp;amp;originHeight=244&amp;amp;originWidth=425&amp;amp;size=113891&amp;amp;status=done&amp;amp;style=none&amp;amp;width=425&#34; alt=&#34;image.png&#34; loading=&#34;lazy&#34;&gt;&lt;br /&gt;&lt;img src=&#34;https://cdn.nlark.com/yuque/0/2020/png/513194/1593238617376-45f51fef-ccbe-4528-9e96-c02dcfb9e654.png#align=left&amp;amp;display=inline&amp;amp;height=582&amp;amp;margin=%5Bobject%20Object%5D&amp;amp;name=image.png&amp;amp;originHeight=582&amp;amp;originWidth=576&amp;amp;size=302789&amp;amp;status=done&amp;amp;style=none&amp;amp;width=576&#34; alt=&#34;image.png&#34; loading=&#34;lazy&#34;&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;实例化过程中用到异步本身，需要setTimeout&lt;/li&gt;
+&lt;/ul&gt;
+&lt;figure data-type=&#34;image&#34; tabindex=&#34;1&#34;&gt;&lt;img src=&#34;https://cdn.nlark.com/yuque/0/2020/png/513194/1593241163054-c00c45ff-b59e-4a42-bb7a-a4be274e2963.png#align=left&amp;amp;display=inline&amp;amp;height=567&amp;amp;margin=%5Bobject%20Object%5D&amp;amp;name=image.png&amp;amp;originHeight=567&amp;amp;originWidth=602&amp;amp;size=334364&amp;amp;status=done&amp;amp;style=none&amp;amp;width=602&#34; alt=&#34;image.png&#34; loading=&#34;lazy&#34;&gt;&lt;/figure&gt;
+">常见面试题总结（四）Css骚操作、图片懒加载，手写promise等</a>
       </div>
       
       <div class="item">
