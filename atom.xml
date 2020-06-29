@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://Orime112.github.io</id>
     <title>个人小站</title>
-    <updated>2020-06-28T05:51:03.508Z</updated>
+    <updated>2020-06-29T06:21:16.185Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://Orime112.github.io"/>
     <link rel="self" href="https://Orime112.github.io/atom.xml"/>
@@ -10,6 +10,309 @@
     <logo>https://Orime112.github.io/images/avatar.png</logo>
     <icon>https://Orime112.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, 个人小站</rights>
+    <entry>
+        <title type="html"><![CDATA[颤抖吧骚年，让我们手撸一个webpack]]></title>
+        <id>https://Orime112.github.io/post/webpack-hand-realize/</id>
+        <link href="https://Orime112.github.io/post/webpack-hand-realize/">
+        </link>
+        <updated>2020-06-29T06:20:22.000Z</updated>
+        <content type="html"><![CDATA[<p><a name="Tc4ff"></a></p>
+<h1 id="前言">前言</h1>
+<hr>
+<p>webpack是前端玩家每天都在使用的打包工具，但这个工具封装得过于抽象，众多api的设置就已经劝退了一大批人，此文通过分析webpack的打包流程，逐步揭开webpack内部运行的神秘面纱，并且手动实现一个丐版webpack。<br /><img src="https://cdn.nlark.com/yuque/0/2020/jpeg/513194/1593401162506-76483944-fa33-4115-be35-46e34aa73f63.jpeg#align=left&amp;display=inline&amp;height=1080&amp;margin=%5Bobject%20Object%5D&amp;name=jpg%20%282%29.jpg&amp;originHeight=1080&amp;originWidth=1920&amp;size=224353&amp;status=done&amp;style=none&amp;width=1920" alt="jpg (2).jpg" loading="lazy"><br /></p>
+<p><a name="6fVap"></a></p>
+<h1 id="概念">概念</h1>
+<p><a name="bTP3o"></a></p>
+<h3 id="1-webpack-是什么">1、Webpack 是什么？</h3>
+<blockquote>
+<p>一个 JS 代码打包器。<br>
+至于图片、CSS、Less、TS等其他文件，就需要 Webpack 配合 loader 或者 plugin 功能来实现~</p>
+</blockquote>
+<p><a name="BsPJc"></a></p>
+<h3 id="2-webpack构建原理">2、webpack构建原理</h3>
+<blockquote>
+<ol>
+<li>根据配置，识别入口文件；</li>
+<li>逐层识别模块依赖（包括 Commonjs、AMD、或 ES6 的 import 等，都会被识别和分析）；</li>
+<li>Webpack 主要工作内容就是分析代码，转换代码，编译代码，最后输出代码；</li>
+<li>输出最后打包后的代码。</li>
+</ol>
+</blockquote>
+<p><a name="wvHjG"></a></p>
+<h3 id="3-webpack打包流程分析">3、webpack打包流程分析</h3>
+<blockquote>
+<ol>
+<li>webpack.config.js中获取配置参数，结合Shell传入形成配置结果。</li>
+<li>初始化compiler对象，注册所有配置的插件，监听生命周期，做出反应</li>
+<li>在webpack.config.js中却指定entry入口，解析文件构建AST语法树，寻找依赖，递归编译</li>
+<li>编译模块</li>
+<li>生成代码块chunk并输出</li>
+<li>输出chunk到文件系统</li>
+</ol>
+</blockquote>
+<p><a name="3QdKi"></a></p>
+<h1 id="思考">思考</h1>
+<hr>
+<p>如果我们来构建一个类似webpack的打包工具（只打包js），会有什么思路？</p>
+<ol>
+<li>找到主入口文件，解析其中的字符串代码，词法分析---&gt;语法分析---&gt;生成AST语法树</li>
+<li>找到该入口文件中的依赖项，对依赖项进行解析</li>
+<li>递归解析依赖项代码，生成可执行代码片段合并到入口文件中</li>
+<li>生成可执行代码片段交给浏览器执行</li>
+</ol>
+<p><a name="uJlOk"></a></p>
+<h1 id="手写">手写</h1>
+<hr>
+<p><a name="tlLxH"></a></p>
+<h2 id="一-环境搭建">一、环境搭建</h2>
+<pre><code class="language-typescript">yarn init -y
+
+yarn add @babel/parser @babel/traverse @babel/core @babel/preset-env
+
+</code></pre>
+<p><a name="nqSq9"></a></p>
+<h2 id="二-流程分析">二、流程分析</h2>
+<ul>
+<li><code>createAssets</code> : 收集和处理文件的代码；</li>
+<li><code>createGraph</code> ：根据入口文件，返回所有文件依赖图；</li>
+<li><code>bundle</code> : 根据依赖图整个代码并输出；</li>
+</ul>
+<p><a name="rwwnu"></a></p>
+<h2 id="三-函数实现">三、函数实现</h2>
+<p><a name="NFUn2"></a></p>
+<h3 id="1-实现createassets函数">1、实现<code>createAssets</code>函数</h3>
+<ol>
+<li>通过 <code>fs.readFileSync()</code> 方法，以<strong>同步方式</strong>读取指定路径下的文件流，并通过 <code>parser</code> 依赖包提供的 <code>parse()</code> 方法，将读取到的文件流 buffer <strong>转换为浏览器可以认识的代码（AST）</strong></li>
+<li>接下来声明 <code>dependencies</code> 变量来保存收集到的文件依赖路径，通过 <code>traverse（）</code> 方法遍历 <code>ast</code>，获取每个节点依赖路径，并 <code>push</code> 进 <code>dependencies</code> 数组中。</li>
+<li>在收集依赖的同时，我们可以将 AST 代码转换为浏览器可运行代码，这就需要使用到 <code>babel</code> ，这个万能的小家伙，为我们提供了非常好用的 <code>transformFromAstSync()</code> 方法，同步的将 AST 转换为浏览器可运行代码</li>
+</ol>
+<br />
+<pre><code class="language-typescript">// leo_webpack.js
+
+const fs = require('fs')
+const path = require('path')
+const parser = require('@babel/parser')
+const traverse = require('@babel/traverse').default
+const babel = rquire(&quot;@babel/core&quot;)
+
+let moduleId = 0
+const createAssets = filename =&gt; {
+  
+  // 1
+	const content = fs.readFileSync(filename, 'utf8')
+  
+  const ast = parser.parse(content, {
+  	sourceType: 'module'
+  })
+  
+  // 2
+  const dependencies = []
+  
+  traverse(ast, {
+  	ImportDeclaration: ({node}) =&gt; {
+    	dependencies.push(node.source.value)
+    }
+  })
+  
+  // 3
+  const {code} = babel.transformFromAstSync(ast, null, {
+  	presets: ['@babel/preset-env']
+  })
+  let id = moduleId++
+  return {
+  	id,
+    filename,
+    code,
+    dependencies
+  }
+}
+</code></pre>
+<p><a name="wY2Ii"></a></p>
+<h3 id=""></h3>
+<p><a name="dE0t2"></a></p>
+<h3 id="2-实现creategraph函数">2、实现<code>createGraph</code>函数</h3>
+<ul>
+<li>在 <code>createGraph()</code> 函数中，我们将递归所有依赖模块，循环分析每个依赖模块依赖，生成一份依赖图谱</li>
+</ul>
+<pre><code class="language-typescript">function createGraph(entry) {
+	const mainAsset = createAssets(entry)
+  const queue = [mainAsset]
+  for(const asset of queue) {
+  	const dirname = path.dirname(asset.filename)
+    asset.mapping = {}
+    asset.dependencies.forEach(relativePath =&gt; {
+    	const absolutePath = path.join(__dirname, relativePath)
+      const child = createAssets(absolutePath)
+      asset.mapping[relativePath] = child.id
+      queue.push(child)
+    })
+  }
+  return queue
+}
+</code></pre>
+<p><a name="eVeX3"></a></p>
+<h3 id="3-实现bundle函数">3、实现bundle函数</h3>
+<ul>
+<li>在 <code>bundle()</code> 函数中，接收一个依赖图谱 <code>graph</code> 作为参数，最后输出编译后的结果。</li>
+</ul>
+<pre><code class="language-typescript">function bundle(graph) {
+    let modules = &quot;&quot;;
+    graph.forEach(item =&gt; {
+        modules += `
+            ${item.id}: [
+                function (require, module, exports){
+                    ${item.code}
+                },
+                ${JSON.stringify(item.mapping)}
+            ],
+        `
+    })
+  
+      return `
+        (function(modules){
+            function require(id){
+                const [fn, mapping] = modules[id];
+                function localRequire(relativePath){
+                    return require(mapping[relativePath]);
+                }
+                const module = {
+                    exports: {}
+                }
+                fn(localRequire, module, module.exports);
+                return module.exports;
+            }
+            require(0);
+        })({${modules}})
+    `
+  
+}
+
+</code></pre>
+<p><a name="NoObu"></a></p>
+<h2 id="测试">测试</h2>
+<p>leo_webpack.js</p>
+<pre><code class="language-typescript">// 一、实现 createAssets 方法中的 文件读取 和 AST转换 操作：
+
+const fs = require('fs')
+const path = require('path')
+const parser = require('@babel/parser')
+const traverse = require('@babel/traverse').default // 由于traverse是才用的ES Module到处，我们通过require引入就需要加个 .default
+
+const babel = require('@babel/core')
+
+let moduleId = 0 // 全局保存模块id防止重复
+
+function createAssets(filename) {
+  const content = fs.readFileSync(filename, &quot;utf-8&quot;); // 根据文件名，同步读取文件流
+
+  // 将读取文件流 buffer 转换为 AST
+  const ast = parser.parse(content, {
+    sourceType: &quot;module&quot; // 指定源码类型
+  })
+  const dependencies = []; // 用于收集文件依赖的路径
+
+  // 通过 traverse 提供的操作 AST 的方法，获取每个节点的依赖路径
+  traverse(ast, {
+    ImportDeclaration: ({ node }) =&gt; {
+      dependencies.push(node.source.value);
+    }
+  });
+
+  // 通过 AST 将 ES6 代码转换成 ES5 代码
+  const { code } = babel.transformFromAstSync(ast, null, {
+    presets: [&quot;@babel/preset-env&quot;]
+  });
+
+  let id = moduleId++; // 设置当前处理的模块ID
+  return {
+    id,
+    filename,
+    code,
+    dependencies
+  }
+}
+/**
+{ id: 0,
+  filename: './src/index.js',
+  code:
+   '&quot;use strict&quot;;\n\nvar _info = _interopRequireDefault(require(&quot;./info.js&quot;));\n\nfunction _interopRequireDefault(obj) { return obj &amp;&amp; obj.__esModule ? obj : { &quot;default&quot;: obj }; }\n\nconsole.log(_info[&quot;default&quot;]);',
+  dependencies: [ './info.js' ]
+}
+ */
+
+// 二、在 createGraph() 函数中，我们将递归所有依赖模块，循环分析每个依赖模块依赖，生成一份依赖图谱。
+function createGraph(entry) {
+  const mainAsset = createAssets(entry); // 获取入口文件下的内容
+  const queue = [mainAsset]; // 入口文件的结果作为第一项
+  for (const asset of queue) {
+    const dirname = path.dirname(asset.filename);
+    asset.mapping = {};
+    asset.dependencies.forEach(relativePath =&gt; {
+      const absolutePath = path.join(dirname, relativePath); // 转换文件路径为绝对路径
+      const child = createAssets(absolutePath);
+      asset.mapping[relativePath] = child.id; // 保存模块ID 
+      queue.push(child); // 递归去遍历所有子节点的文件
+    })
+  }
+  return queue;
+}
+
+// 三、在 bundle() 函数中，接收一个依赖图谱 graph 作为参数，最后输出编译后的结果。
+function bundle(graph) {
+  let modules = &quot;&quot;;
+  graph.forEach(item =&gt; {
+    modules += `
+            ${item.id}: [
+                function (require, module, exports){
+                    ${item.code}
+                },
+                ${JSON.stringify(item.mapping)}
+            ],
+        `
+  })
+
+  return `
+        (function(modules){
+            function require(id){
+                const [fn, mapping] = modules[id];
+                function localRequire(relativePath){
+                    return require(mapping[relativePath]);
+                }
+                const module = {
+                    exports: {}
+                }
+                fn(localRequire, module, module.exports);
+                return module.exports;
+            }
+            require(0);
+        })({${modules}})
+    `
+}
+
+const graph = createGraph('./src/index.js')
+const result = bundle(graph)
+// console.log('result', result);
+
+eval(result);
+</code></pre>
+<p>src/consts.js</p>
+<pre><code class="language-typescript">export const company = '平安'
+</code></pre>
+<p>src/info.js</p>
+<pre><code class="language-typescript">import { company } from './consts.js'
+export default `你好，${company}`
+</code></pre>
+<p>src/index.js</p>
+<pre><code class="language-typescript">import info from './info.js'
+console.log(info);
+</code></pre>
+<p><a name="tKoxk"></a></p>
+<h1 id="参考地址">参考地址：</h1>
+<ul>
+<li><a href="https://mp.weixin.qq.com/s/_IZaLEfctQmToTabVgKIRA">你不知道的 Webpack（4000 字，手写源码）</a></li>
+</ul>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[社区系统nest.js后端搭建]]></title>
         <id>https://Orime112.github.io/post/nestjs-frame/</id>
